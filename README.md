@@ -85,6 +85,8 @@ project.
 
 ```cl
 (defmodule hello-world
+  (import
+    (from lmud-yaws (run-yaws 2)))
   (export all))
 
 (include-file "deps/lmug/include/response.lfe")
