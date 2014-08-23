@@ -1,9 +1,10 @@
 # lmug
 
+**LFE HTTP Server Abstraction and Web Application Middleware Infrastructure**
 
 ## Introduction
 
-Add content to me here!
+TBD
 
 
 ### Dependencies
@@ -26,7 +27,7 @@ Just add it to your ``rebar.config`` deps:
 
     {deps, [
         ...
-        {lmug, ".*", {git, "git@github.com:YOURNAME/lmug.git", "master"}}
+        {lmug, ".*", {git, "git@github.com:lfex/lmug.git", "master"}}
       ]}.
 ```
 
