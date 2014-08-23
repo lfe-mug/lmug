@@ -2,7 +2,7 @@
 
 *LFE HTTP Server Abstraction and Web Application Middleware Infrastructure*
 
-<img src="resources/images/mugring-small-grey.png" />
+<img src="resources/images/mugring-small-grey-2.png" />
 
 ## Introduction
 
@@ -62,7 +62,7 @@ project.
 (defmodule hello-world
   (export all))
 
-(include-file "deps/lmud/include/response.lfe")
+(include-file "deps/lmug/include/response.lfe")
 
 (defun handler (request)
   (make-response
