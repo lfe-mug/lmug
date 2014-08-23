@@ -36,10 +36,10 @@ from the details of the protocol.
 Adapters are implemented as functions of two arguments:
 
 1. a handler, and
-1. an options record.
+1. an options proplist.
 
-The options record provides any needed configuration to the adapter, such as
-the port on which to run.
+The options proplist provides any needed configuration to the adapter, such
+as the port on which to run.
 
 Once initialized, adapters receive HTTP requests, parse them to construct a
 request record, and then invoke their handler with this request record as an
@@ -47,7 +47,7 @@ argument. Once the handler returns a response record, the adapter uses it to
 construct and send an HTTP response to the client.
 
 
-## Request Map
+## Request Record
 
 A request record is an LFE record containing at least the following keys and
 corresponding values:
@@ -133,7 +133,7 @@ corresponding values:
 ```
 
 
-## Response Map
+## Response Record
 
 A response record is an LFE record containing at least the following keys and
 corresponding values:
@@ -147,7 +147,7 @@ corresponding values:
 ```
 'headers
   (Required, IPersistentMap)
-  An LFE record of HTTP header names to header values. These values may be
+  An LFE proplist of HTTP header names to header values. These values may be
   either Strings, in which case one name/value header will be sent in the
   HTTP response, or a seq of Strings, in which case a name/value header will
   be sent for each such String value.
