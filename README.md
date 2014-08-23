@@ -48,7 +48,7 @@ directory of this project when you run ``make deps``:
 
 * [LFE](https://github.com/rvirding/lfe) (Lisp Flavored Erlang; needed only
   Wto compile)
-* [ltest](https://github.com/lfex/ltest)(needed only to run the unit tests)
+* [ltest](https://github.com/lfex/ltest) (needed only to run the unit tests)
 
 
 ## Installation
@@ -102,6 +102,6 @@ What's with the name? Well, there was lfest ... the web app routing party.
 What would be at an LFE routing party? Lots of mugs, I guess. Full of tastey,
 hot LFE.
 
-Also, a mug is topologically equivalent to a ring. And lmug even more so.
+Also, a mug is topologically equivalent to a ring. An lmug even more so.
 
 Besides, lhorse just sounds weird.
