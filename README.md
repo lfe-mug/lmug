@@ -58,7 +58,7 @@ NOTE: the libraries referenced in this section have not been created yet.
 The following assumes that you have lmud-yaws as a dependency in your
 project.
 
-```lfe
+```cl
 (defmodule hello-world
   (export all))
 
