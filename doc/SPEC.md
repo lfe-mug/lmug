@@ -1,6 +1,6 @@
 # lmug Spec
 
-lmud is defined in terms of the following:
+lmug is defined in terms of the following:
 
  * handlers
  * middleware
@@ -13,14 +13,14 @@ These are described below.
 
 ## Handlers
 
-lmud handlers constitute the core logic of the web application. Handlers are
+lmug handlers constitute the core logic of the web application. Handlers are
 implemented as LFE functions that process a given request record to generate
 and return a response record.
 
 
 ## Middleware
 
-lmud middleware augments the functionality of handlers by invoking them in
+lmug middleware augments the functionality of handlers by invoking them in
 the process of generating responses. Typically middleware will be
 implemented as a higher-order function that takes one or more handlers and
 configuration options as arguments and returns a new handler with the
@@ -29,7 +29,7 @@ desired compound behavior.
 
 ## Adapters
 
-Handlers are run via lmud adapters, which are in turn responsible for
+Handlers are run via lmug adapters, which are in turn responsible for
 implementing the HTTP protocol and abstracting the handlers that they run
 from the details of the protocol.
 

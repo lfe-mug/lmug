@@ -28,7 +28,7 @@ Using lmug as the basis for your web application has a number of benefits:
 * Deploy your application in cloud environments like Amazon Elastic
   Beanstalk and Heroku
 
-If all goes well, lmud will be the current de facto standard base from which
+If all goes well, lmug will be the current de facto standard base from which
 to write web applications in LFE. Higher level frameworks could then use
 lmug as a common basis.
 
@@ -75,7 +75,7 @@ And then do the usual:
 
 NOTE: the libraries referenced in this section have not been created yet.
 
-The following assumes that you have lmud-yaws as a dependency in your
+The following assumes that you have lmug-yaws as a dependency in your
 project.
 
 ### Hello World
