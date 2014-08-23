@@ -5,8 +5,10 @@
 
 ## Introduction
 
-lmug is an LFE web applications library inspired by Clojure's Ring (and thus
-Python's WSGI). By abstracting the details of HTTP into a simple, unified
+lmug is an LFE web applications library inspired by
+[Clojure's Ring](https://github.com/ring-clojure/ring) (and thus
+[Python's WSGI](http://legacy.python.org/dev/peps/pep-3333/)). By
+abstracting the details of HTTP into a simple, unified
 API, lmug allows web applications to be constructed of modular components
 that can be shared among a variety of applications, web servers, and web
 frameworks.
