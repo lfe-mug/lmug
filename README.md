@@ -1,6 +1,6 @@
 # lmug
 
-**LFE HTTP Server Abstraction and Web Application Middleware Infrastructure**
+*LFE HTTP Server Abstraction and Web Application Middleware Infrastructure*
 
 ## Introduction
 
