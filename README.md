@@ -2,6 +2,7 @@
 
 *LFE HTTP Server Abstraction and Web Application Middleware Infrastructure*
 
+<img src="resources/images/mugring-small-grey.png" />
 
 ## Introduction
 
@@ -52,7 +53,25 @@ And then do the usual:
 
 ## Usage
 
-Add content to me here!
+NOTE: the libraries referenced in this section have not been created yet.
+
+The following assumes that you have lmud-yaws as a dependency in your
+project.
+
+```lfe
+(defmodule hello-world
+  (export all))
+
+(include-file "deps/lmud/include/response.lfe")
+
+(defun handler (request)
+  (make-response
+    status 200
+    headers (#("Content-Type" "text/plain"))
+    body "Hello World"))
+
+(run-yaws #'handler/1 `(#(port 8080)))
+```
 
 
 ## lmug?
