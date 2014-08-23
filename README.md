@@ -18,6 +18,26 @@ The [SPEC](doc/SPEC.md) file, copied directly from the Clojure Ring project,
 provides a complete description of the lmug interface.
 
 
+### Why?
+
+Using lmug as the basis for your web application has a number of benefits:
+
+* Write your application using LFE functions and records
+* Run your application in a auto-reloading development server
+* Take advantage of pre-written middleware
+* Deploy your application in cloud environments like Amazon Elastic
+  Beanstalk and Heroku
+
+If all goes well, lmud will be the current de facto standard base from which
+to write web applications in LFE. Higher level frameworks could then use
+lmug as a common basis.
+
+Even though lmug provides only a low-level interface, it is useful to
+understand how it works even if you plan to use a higher-level interface.
+Without a basic understanding of lmug, you cannot write middleware, and you
+may find debugging your application more difficult.
+
+
 ### Dependencies
 
 This project assumes that you have [rebar](https://github.com/rebar/rebar)
@@ -58,6 +78,8 @@ NOTE: the libraries referenced in this section have not been created yet.
 The following assumes that you have lmud-yaws as a dependency in your
 project.
 
+### Hello World
+
 ```cl
 (defmodule hello-world
   (export all))
@@ -70,7 +92,7 @@ project.
     headers (#("Content-Type" "text/plain"))
     body "Hello World"))
 
-(run-yaws #'handler/1 `(#(port 8080)))
+(run-yaws #'handler/1 `(#(port 1206)))
 ```
 
 
