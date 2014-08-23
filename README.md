@@ -4,6 +4,7 @@
 
 <img src="resources/images/mugring-small-grey-2.png" />
 
+
 ## Introduction
 
 lmug is an LFE web applications library inspired by
@@ -71,12 +72,14 @@ And then do the usual:
     $ rebar compile
 ```
 
+
 ## Usage
 
 NOTE: the libraries referenced in this section have not been created yet.
 
 The following assumes that you have lmug-yaws as a dependency in your
 project.
+
 
 ### Hello World
 
