@@ -6,6 +6,9 @@
       (is_defined 2)))
   (export all))
 
+(include-lib "lmug/include/request.lfe")
+(include-lib "lmug/include/response.lfe")
+
 (defun host->tuple (host)
   (let ((`#(ok ,tuple) (inet:getaddr host 'inet)))
     tuple))
