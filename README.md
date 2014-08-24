@@ -39,19 +39,6 @@ Without a basic understanding of lmug, you cannot write middleware, and you
 may find debugging your application more difficult.
 
 
-### Dependencies
-
-This project assumes that you have [rebar](https://github.com/rebar/rebar)
-installed somwhere in your ``$PATH``.
-
-This project depends upon the following, which are installed to the ``deps``
-directory of this project when you run ``make deps``:
-
-* [LFE](https://github.com/rvirding/lfe) (Lisp Flavored Erlang; needed only
-  Wto compile)
-* [ltest](https://github.com/lfex/ltest) (needed only to run the unit tests)
-
-
 ## Installation
 
 Just add it to your ``rebar.config`` deps:
@@ -75,31 +62,40 @@ And then do the usual:
 
 ## Usage
 
-NOTE: the libraries referenced in this section have not been created yet.
+NOTE: the code in this section doesn't work yet! One of the first goals is to
+get to this point :-)
 
-The following assumes that you have lmug-yaws as a dependency in your
-project.
+NOTE: barista is a stand-alone demo HTTP server that is inlcuded with lmug. It
+is an lmug wrapper around an OTP ``http`` server.
+
+The usage examples below are done from the REPL:
+
+```bash
+$ make repl
+```
 
 
 ### Hello World
 
 ```cl
-(defmodule hello-world
-  (import
-    (from lmud-yaws (run-yaws 2)))
-  (export all))
+> (slurp "src/lmug.lfe")
+#(ok lmug)
+> (defun handler (request)
+    (make-response
+      status 200
+      headers (#("Content-Type" "text/plain"))
+      body "Hello World"))
 
-(include-file "deps/lmug/include/response.lfe")
-
-(defun handler (request)
-  (make-response
-    status 200
-    headers (#("Content-Type" "text/plain"))
-    body "Hello World"))
-
-(run-yaws #'handler/1 `(#(port 1206)))
+> (set `#(ok ,pid) (barista:run-barista #'handler/1))
+#(ok <0.46.0>)
 ```
 
+Or, if you want to run on a non-default port:
+
+```cl
+(barista:run-barista #'handler/1 '(#(port 8000)))
+#(ok <0.54.0>)
+```
 
 ## lmug?
 
