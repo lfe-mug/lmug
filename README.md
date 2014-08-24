@@ -97,6 +97,27 @@ Or, if you want to run on a non-default port:
 #(ok <0.54.0>)
 ```
 
+
+## Details
+
+
+### Handlers
+
+lmug handlers are functions that define your web application. They take one
+argument, a map representing a HTTP request, and return a map representing the
+HTTP response. The handlers return a record that can then be translated by
+the supporting HTTP server adatper code into the appropriate form that will
+allow the configured HTTP server (e.g., YAWS, Cowboy, OTP httpd, etc.) to
+return an HTTP response.
+
+
+### Middleware
+
+lmug middleware are higher-level functions that add additional functionality
+to handlers. The first argument of a middleware function should be a handler,
+and its return value should be a new handler function.
+
+
 ## lmug?
 
 What's with the name? Well, there was lfest ... the web app routing party.
