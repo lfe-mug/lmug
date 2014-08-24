@@ -66,7 +66,7 @@ NOTE: the code in this section doesn't work yet! One of the first goals is to
 get to this point :-)
 
 NOTE: barista is a stand-alone demo HTTP server that is inlcuded with lmug. It
-is an lmug wrapper around an OTP ``http`` server.
+is an lmug wrapper around the OTP ``httpd`` server.
 
 The usage examples below are done from the REPL:
 
