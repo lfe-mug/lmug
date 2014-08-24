@@ -6,13 +6,13 @@
       (is_defined 2)))
   (export all))
 
-(defun host->listen (host)
-  (let ((`#(ok ,listen) (inet:getaddr host 'inet)))
-    listen))
+(defun host->tuple (host)
+  (let ((`#(ok ,tuple) (inet:getaddr host 'inet)))
+    tuple))
 
 (defun add-listen (options)
   (++ options
-      `(#(listen ,(host->listen (get_value 'host options))))))
+      `(#(listen ,(host->tuple (get_value 'host options))))))
 
 (defun rename-key (old-key new-key old-options)
   (let ((options (++ old-options
