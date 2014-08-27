@@ -17,11 +17,6 @@
   (++ options
       `(#(listen ,(host->tuple (get_value 'host options))))))
 
-(defun rename-key (old-key new-key old-options)
-  (let ((options (++ old-options
-                     `(#(,new-key ,(get_value old-key old-options))))))
-    (delete old-key options)))
-
 (defun add-default (key val options)
   (cond
     ((is_defined key options)
