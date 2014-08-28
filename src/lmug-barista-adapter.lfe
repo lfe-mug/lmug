@@ -1,9 +1,6 @@
 (defmodule lmug-barista-adapter
   (export all))
 
-(include-lib "lmug/include/request.lfe")
-(include-lib "lmug/include/response.lfe")
-
 (defun get-default-options ()
   (orddict:from_list
       `(#(modules (mod_log mod_disk_log lmug-barista-adapter)))))
