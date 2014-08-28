@@ -1,11 +1,4 @@
-(defmodule lmug
-  (import
-    (from proplists
-      (delete 2)
-      (get_value 2)
-      (is_defined 2))
-    (from lutil-type
-      (host->tuple 1)))
+(defmodule lmug-barista-adapter
   (export all))
 
 (include-lib "lmug/include/request.lfe")
@@ -13,10 +6,11 @@
 
 (defun get-default-options ()
   (orddict:from_list
-      `(#(modules (mod_log mod_disk_log lmug)))))
+      `(#(modules (mod_log mod_disk_log lmug-barista-adapter)))))
 
 (defun get-default-handler ()
-  (lambda (x) x))
+  "Given an lmug request record, return a default response."
+  (lambda (x) (lmug-util:get-response x)))
 
 (defun run ()
   "Run with the default handler and options."
@@ -31,7 +25,6 @@
   (let ((options (barista-options:merge
                    (get-default-options)
                    custom-options)))
-    (io:format "options: ~p~n" (list options))
     (barista:run-barista handler options)))
 
 (defun stop (arg)
@@ -68,5 +61,4 @@
               (lmug-util:httpd->lmug-request httpd-mod-data)))
     (receive
       ((tuple 'handler-output data)
-        `#(proceed ,(lmug-util:lmug->httpd-response
-                      (lmug-util:get-response data)))))))
+        `#(proceed ,(lmug-util:lmug->httpd-response data))))))
