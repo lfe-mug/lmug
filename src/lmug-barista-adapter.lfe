@@ -11,7 +11,7 @@
 
 (defun run ()
   "Run with the default handler and options."
-  (run (get-default-handler)))
+  (run (get-default-handler) '()))
 
 (defun run (handler)
   "Run with the default options but a specific handler."
@@ -19,7 +19,7 @@
 
 (defun run (handler custom-options)
   "Run with a specific handler and options."
-  (let ((options (barista-options:merge
+  (let ((options (lutil-type:orddict-merge
                    (get-default-options)
                    custom-options)))
     (barista:run-barista handler options)))
@@ -52,7 +52,7 @@
    * converts the passed lmug request data to the format expected by
      Erlang/OTP httpd
   "
-  (let ((handler-pid (whereis (barista:lmug-handler-name))))
+  (let ((handler-pid (whereis (lmug:handler-name))))
     (! handler-pid
        (tuple (self)
               (lmug-util:httpd->lmug-request httpd-mod-data)))

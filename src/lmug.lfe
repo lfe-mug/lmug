@@ -7,5 +7,8 @@
 (include-lib "include/request.lfe")
 (include-lib "include/response.lfe")
 
+(defun handler-name ()
+  (barista:lmug-handler-name))
+
 (defun run (handler)
   (lmug-barista-adapter:run handler))
