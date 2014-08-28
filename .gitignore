@@ -8,3 +8,4 @@ ebin/*
 bin/expm
 *.dump
 .rebar
+log/*
