@@ -3,13 +3,13 @@
   (server-name "")
   (remote-addr "")
   (uri "")
-  query-string
+  query-params
   (scheme "")
   (request-method 'get)
-  content-type
+  (content-type 'unknown-content-type)
   content-length
-  content-encoding
-  ssl-client-cert
+  (content-encoding 'unknown-content-encoding)
+  (ssl-client-cert 'unknown-ssl-client-cert)
   (headers '())
   body
   orig)
