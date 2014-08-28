@@ -73,7 +73,7 @@ NOTE: the code in this section doesn't work yet! One of the first goals
 is to get to this point :-)
 
 NOTE: barista is a stand-alone demo HTTP server that is inlcuded with
-lmug. It is an lmug wrapper around the Erlang/OTP ``httpd`` server.
+lmug. It is an lmug wrapper around the OTP ``httpd`` server.
 
 The usage examples below are done from the REPL:
 
@@ -90,13 +90,7 @@ $ make repl
       status 200
       headers (#("Content-Type" "text/plain"))
       body "Hello World"))
-
-(defun handler (x) "Wassup?")
-(defun handler (x) x)
-
-(set `#(ok ,pid) (lmug:run #'handler/1))
-(set `#(ok ,pid) (lmug:run))
-
+handler
 > (set `#(ok ,pid) (lmug:run #'handler/1))
 #(ok <0.46.0>)
 ```
