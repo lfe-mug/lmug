@@ -1,8 +1,8 @@
 %% -*- erlang -*-
-{application, 'lmug',
+{application, lmug,
  [
   %% A quick description of the application.
-  {description, "My project description..."},
+  {description, "LFE HTTP Server Abstraction and Web Application Middleware Infrastructure"},
 
   %% The version of the application
   {vsn, "0.0.1"},
