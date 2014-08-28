@@ -85,20 +85,37 @@ $ make repl
 ### Hello World
 
 ```cl
+> (slurp "src/lmug.lfe")
+#(ok lmug)
 > (defun handler (request)
     (make-response
       status 200
-      headers (#("Content-Type" "text/plain"))
+      headers '(#("content-type" "text/plain"))
       body "Hello World"))
 handler
-> (set `#(ok ,pid) (lmug:run #'handler/1))
-#(ok <0.46.0>)
+> (set `#(ok ,pid) (run #'handler/1))
+#(ok <0.55.0>)
 ```
 
-Or, if you want to run on a non-default port:
+To check your new hanlder:
+
+```bash
+$ curl -D- -X GET http://localhost:1206/
+HTTP/1.1 200 OK
+Server: inets/5.10.2
+Date: Thu, 28 Aug 2014 20:30:52 GMT
+Content-Length: 11
+Content-Type: text/plain
+
+Hello World
+```
+
+If you want to run on a non-default port (or pass other options) or if you
+are using with other projects, please use the adapter module directly. For
+example:
 
 ```cl
-(lmug:run #'handler/1 '(#(port 8000)))
+(lmug-barista-adapter:run #'handler/1 '(#(port 8000)))
 #(ok <0.54.0>)
 ```
 
