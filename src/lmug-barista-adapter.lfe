@@ -40,7 +40,7 @@
   server' when we call the 'run' function. This will allow us to call the
   configured handler later (i.e., here in the 'do' function).
 
-  This function does the following, when it is called (on each HTTH request):
+  This function does the following, when it is called (on each HTTP request):
 
    * looks up the PID for the handler loop
    * calls the middleware function that converts the Erlang/OTP httpd arg data
