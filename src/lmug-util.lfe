@@ -12,8 +12,11 @@
   (++ (lutil:get-version)
       `(#(lmug ,(get-lmug-version)))))
 
-(defun normalize-http-verb (verb)
-  (list_to_atom (string:to_lower verb)))
+(defun normalize-http-verb
+  ((verb) (when (is_list verb))
+    (list_to_atom (string:to_lower verb)))
+  ((verb) (when (is_atom verb))
+    (normalize-http-verb (atom_to_list verb))))
 
 (defun split-host-data (host-data)
   (string:tokens (car (string:tokens host-data "/")) ":"))
@@ -45,14 +48,16 @@
   request data needed by lmug, in the record structure required by lmug (and
   defined in the lmug Spec)."
   (let ((`(,host ,port) (get-host-data (mod-absolute_uri data)))
-        (hostname (get-hostname (mod-init_data data)))
+        (remote-host (get-hostname (mod-init_data data)))
         (uri (mod-request_uri data))
         (body (mod-entity_body data)))
     (make-request
       server-port port
-      server-name hostname
-      remote-addr host
-      uri uri
+      server-name host
+      remote-addr remote-host
+      ;; XXX the following need to be sorted out
+      uri uri ; this should have query params
+      path uri ; this should be with no query params
       query-params (parse-query-string uri)
       ;; XXX figure out how to get the scheme
       scheme 'unknown-scheme

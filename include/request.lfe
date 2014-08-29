@@ -3,6 +3,7 @@
   (server-name "")
   (remote-addr "")
   (uri "")
+  (path "")
   query-params
   (scheme "")
   (request-method 'get)
