@@ -52,33 +52,28 @@
         (uri (mod-request_uri data))
         (body (mod-entity_body data)))
     (make-request
-      server-port port
-      server-name host
-      remote-addr remote-host
+      server-port    port
+      server-name    host
+      remote-addr    remote-host
       ;; XXX the following need to be sorted out
-      uri uri ; this should have query params
-      path uri ; this should be with no query params
-      query-params (parse-query-string uri)
+      uri            uri                 ; this should have query params
+      path           uri                 ; this should be with no query params
+      query-params   (parse-query-string uri)
       ;; XXX figure out how to get the scheme
-      scheme 'unknown-scheme
-      method (normalize-http-verb (mod-method data))
-      ;; XXX figure out how to get the content-type
-      content-type 'unknown-content-type
-      content-length (length body)
-      ;; XXX figure out how to get the content-encoding
-      content-encoding 'unknown-content-encoding
-      headers (mod-parsed_header data)
-      body body
-      orig data)))
+      scheme         'unknown-scheme
+      method         (normalize-http-verb (mod-method data))
+      headers        (mod-parsed_header data)
+      body           body
+      orig           data)))
 
 (defun get-response (lmug-request-data)
   "Translate an lmug request to an lmug response."
-  (make-response
-    status 200
-    headers '(#(content-type "text/plain"))
-    body (lists:flatten
-           (io_lib:format "Request data: ~n~p"
-                          (list lmug-request-data)))))
+  (let ((body (lists:flatten (io_lib:format "Request data: ~n~p"
+                               (list lmug-request-data)))))
+    (make-response
+      status  200
+      headers '(#(content-type "text/plain"))
+      body    body)))
 
 (defun get-body-length (body)
   (integer_to_list (length body)))
