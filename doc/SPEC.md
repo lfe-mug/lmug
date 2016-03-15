@@ -104,24 +104,6 @@ corresponding values:
 ```
 
 ```
-'content-type [DEPRECATED]
-  (Optional, String)
-  The MIME type of the request body, if known.
-```
-
-```
-'content-length [DEPRECATED]
-  (Optional, Integer)
-  The number of bytes in the request body, if known.
-```
-
-```
-'character-encoding [DEPRECATED]
-  (Optional, String)
-  The name of the character encoding used in the request body, if known.
-```
-
-```
 'ssl-client-cert
   (Optional, X509Certificate)
   The SSL client certificate, if supplied.
