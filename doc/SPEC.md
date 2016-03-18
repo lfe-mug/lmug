@@ -98,6 +98,12 @@ corresponding values:
 ```
 
 ```
+'protocol
+  (Required, String)
+  The protocol the request was made with, e.g. "HTTP/1.1".
+```
+
+```
 'content-type [DEPRECATED]
   (Optional, String)
   The MIME type of the request body, if known.
