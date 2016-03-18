@@ -1,5 +1,7 @@
 # lmug Spec
 
+*v0.0.1*
+
 lmug is defined in terms of the following:
 
  * handlers
@@ -93,6 +95,12 @@ corresponding values:
   (Required, Keyword)
   The HTTP request method, must be a lowercase keyword corresponding to a
   HTTP request method, such as :get or :post.
+```
+
+```
+'protocol
+  (Required, String)
+  The protocol the request was made with, e.g. "HTTP/1.1".
 ```
 
 ```
