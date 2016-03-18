@@ -1,5 +1,7 @@
 # lmug Spec
 
+*v0.0.1*
+
 lmug is defined in terms of the following:
 
  * handlers
