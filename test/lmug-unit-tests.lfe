@@ -1,4 +1,4 @@
-(defmodule unit-lmug-tests
+(defmodule lmug-unit-tests
   (behaviour ltest-unit)
   (export all))
 
