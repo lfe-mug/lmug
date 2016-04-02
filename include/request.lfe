@@ -6,7 +6,7 @@
   (path "")
   query-params
   (scheme "")
-  (request-method 'get)
+  (method 'get)
   (content-type 'unknown-content-type)
   content-length
   (content-encoding 'unknown-content-encoding)
