@@ -4,11 +4,6 @@
   (export all))
 
 (include-lib "inets/include/httpd.hrl")
-(include-lib "include/request.lfe")
-(include-lib "include/response.lfe")
+(include-lib "lmug/include/request.lfe")
+(include-lib "lmug/include/response.lfe")
 
-(defun handler-name ()
-  (barista:lmug-handler-name))
-
-(defun run (handler)
-  (lmug-barista-adapter:run handler))
