@@ -19,3 +19,7 @@
   (is-equal "application/rss+xml" (lmug-util:ext->mime-type 'rss))
   (is-equal "image/tiff" (lmug-util:ext->mime-type 'tif))
   (is-equal "application/zip" (lmug-util:ext->mime-type 'zip)))
+
+(deftest ext->mime-type-override
+  (is-equal "text/asciidoc"
+            (lmug-util:ext->mime-type 'asc '(#(asc "text/asciidoc")))))

@@ -95,11 +95,19 @@
             (response-headers lmug-response-data))
           ,body)))))
 
+(defun ext->mime-type (ext)
+  "The same as #'ext->mime-type/2 but with an empty list for optional
+  mime-types."
+  (ext->mime-type ext '()))
+
 (defun ext->mime-type
-  ((ext) (when (is_atom ext))
-    (proplists:get_value ext (get-default-mime-types)))
-  ((ext) (when (is_list ext))
-    (ext->mime-type (list_to_atom ext))))
+  "Get the mimetype from the filename extension. Takes an optional proplist of
+  extensions to mimetypes that overrides values in the default-mime-types map."
+  ((ext override-mime-types) (when (is_atom ext))
+    (proplists:get_value ext (++ override-mime-types
+                                 (get-default-mime-types))))
+  ((ext override-mime-types) (when (is_list ext))
+    (ext->mime-type (list_to_atom ext) override-mime-types)))
 
 (defun get-default-mime-types ()
   "Get a proplist of default mime-types."
