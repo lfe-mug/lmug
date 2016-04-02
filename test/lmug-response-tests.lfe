@@ -35,6 +35,10 @@
             (lmug-response:content-type (make-response) "text/plain")))
 
 (deftest get-header
+  (is-equal ""
+            (lmug-response:get-header (test-response) ""))
+  (is-equal ""
+            (lmug-response:get-header (test-response) "No-Such-Header"))
   (is-equal "Baz-Quux"
             (lmug-response:get-header (test-response) "Foo-Bar"))
   (is-equal "Baz-Quux"

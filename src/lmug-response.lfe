@@ -13,6 +13,8 @@
 (defun get-header
   "Looks up a header in a Ring response (or request) case insensitively,
   returning the value of the header, or nil if not present."
+  ((resp "")
+    "")
   ((resp header-key) (when (is_atom header-key))
     (get-header resp (atom_to_list header-key)))
   ((resp header-key)
@@ -25,7 +27,9 @@
 
 (defun match-header (headers header-key)
   "Return the first header that matches the given header-key."
-  (car (match-headers headers header-key)))
+  (case (match-headers headers header-key)
+    ('() '())
+    (headers (car headers))))
 
 (defun match-headers (headers sought-key)
   "Return all the headers that match the given header-key."
