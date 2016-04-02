@@ -1,4 +1,4 @@
 (defrecord response
   (status 200)
-  (headers '())
+  (headers '()) ; This is a property list
   (body ""))
