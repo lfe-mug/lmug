@@ -1,4 +1,4 @@
-(defmodule lmug-unit-tests
+(defmodule lmug-tests
   (behaviour ltest-unit)
   (export all))
 
@@ -25,7 +25,7 @@
 
 (deftest ext->mime-type-override
   (is-equal "text/asciidoc"
-            (lmug-util:ext->mime-type 'asc '(#(asc "text/asciidoc")))))
+            (lmug-util:ext->mime-type '.asc '(#(.asc "text/asciidoc")))))
 
 (deftest ext->mime-type-filename
   (is-equal "text/plain" (lmug-util:ext->mime-type ".txt"))
