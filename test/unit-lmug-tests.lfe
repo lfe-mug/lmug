@@ -1,12 +1,8 @@
 (defmodule unit-lmug-tests
-  (behaviour lunit-unit)
-  (export all)
-  (import
-    (from lunit
-      (check-failed-assert 2)
-      (check-wrong-assert-exception 2))))
+  (behaviour ltest-unit)
+  (export all))
 
-(include-lib "deps/lunit/include/lunit-macros.lfe")
+(include-lib "ltest/include/ltest-macros.lfe")
 
-(deftest my-adder
-  (is-equal 4 (: lmug my-adder 2 2)))
+(deftest no-op
+  (is 'true))
