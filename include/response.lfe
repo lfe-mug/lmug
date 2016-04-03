@@ -1,7 +1,7 @@
 (defrecord response
-  (status  (error #(required status integer)))
-  (headers (error #(required headers #(map proplist))))
-  (body    ""))
+  (status  200)
+  (headers ())
+  (body    #""))
 
 (defun loaded-response ()
   "This is just a dummy function for display purposes when including from the

@@ -150,20 +150,25 @@ corresponding values:
 'status
   (Required, integer())
   The HTTP status code, must be greater than or equal to 100.
+
+  Default: 200
 ```
 
 ```
 'headers
-  (Required, #{string() => string(), string() => [string(),...]})
+  (Required, #{string() => string(), string() => [string(),...]}
+             | [atom() | {atom(), term()}])
   An LFE proplist of HTTP header names to header values. These values may be
   either string()s, in which case one name/value header will be sent in the
   HTTP response, or a list of string()s, in which case a name/value header will
   be sent for each such string() value.
+
+  Default: ()
 ```
 
 ```
 'body
-  (Optional, string() | list() | file:name() | file:io_device())
+  (Optional, binary() | string() | list() | file:name() | file:io_device())
   A representation of the response body, if a response body is appropriate
   for the response's status code. The respond body is handled according to
   its type:
@@ -178,4 +183,6 @@ corresponding values:
   file:io_device():
     Contents are consumed from the stream and sent to the client. When the
     stream is exhausted, it is file:close/1'd.
+
+    Default: ""
 ```
