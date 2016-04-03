@@ -26,6 +26,12 @@
 ;;; Unit tests
 ;;; >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
+(deftest response
+  (is-equal (make-response) (funcall (lmug-response:response) '()))
+  (is-equal (make-response) (funcall (lmug-response:response 'ignored) '()))
+  (is-equal (make-response status 748)
+            (funcall (lmug-response:response 'ignored `(#(status 748))) '())))
+
 (deftest header
   (is-equal (make-response headers (test-header-1))
             (lmug-response:header (make-response) "Foo-Bar" "Baz-Quux")))

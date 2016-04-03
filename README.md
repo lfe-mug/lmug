@@ -54,7 +54,7 @@ Just add it to your ``rebar.config`` deps:
 ```erlang
 {deps, [
     ...
-    {lmug, ".*", {git, "git@github.com:lfex/lmug.git", "master"}}
+    {lmug, ".*", {git, "git@github.com:lfe-mug/lmug.git", "master"}}
   ]}.
 ```
 
@@ -90,8 +90,6 @@ application. If you are familiar with Clojure's Ring, then this will look
 
 ```lisp
 (include-lib "clj/include/compose.lfe")
-(include-lib "lmug/include/request.lfe")
-(include-lib "lmug/include/response.lfe")
 
 (defun identity-handler (handler)
   handler)
@@ -105,7 +103,7 @@ application. If you are familiar with Clojure's Ring, then this will look
 Then, to run it, simply do the following:
 
 ```lisp
-> (funcall chain (make-request uri "http://localhost/file.json"))
+> (funcall chain (lmug:request '(#(uri "http://localhost/file.json"))))
 #(response 200 (#("Content-Type" "application/json")) ())
 ```
 

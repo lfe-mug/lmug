@@ -3,6 +3,7 @@
   (export all))
 
 (include-lib "ltest/include/ltest-macros.lfe")
+(include-lib "lmug/include/request.lfe")
 (include-lib "lmug/include/response.lfe")
 
 (deftest response
