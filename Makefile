@@ -16,7 +16,7 @@ compile:
 	rebar3 compile
 
 check:
-	@rebar3 as test eunit
+	@rebar3 eunit
 
 repl: compile
 	@$(LFE)
@@ -29,7 +29,7 @@ clean:
 	@rm -rf ebin/* _build/default/lib/$(PROJECT)
 
 clean-all: clean
-	@rebar3 as dev lfe clean
+	@rebar3 lfe clean
 
 $(SLATE_GIT_HACK):
 	@ln -s $(ROOT_DIR)/.git $(DOCS_DIR)
