@@ -9,7 +9,22 @@
 Infrastructure*
 
 
-## Introduction
+#### Contents
+
+* [Introduction](#introduction-)
+  * [Why?](#why-)
+* [Installation](#installation-)
+* [Usage](#usage-)
+  * [Simple Example](#simple-example-)
+  * [Applications](#applications-)
+* [Details](#details-)
+  * [Handlers](#handlers-)
+  * [Middleware](#middleware-)
+  * [Adaptors](#adaptors-)
+* [The Name?](#the-name-)
+
+
+## Introduction [&#x219F;](#contents)
 
 lmug is an LFE web applications library inspired by
 [Clojure's Ring](https://github.com/ring-clojure/ring) (and thus,
@@ -28,7 +43,7 @@ The [SPEC](doc/SPEC.md) file, copied directly from the Clojure Ring
 project, provides a complete description of the lmug interface.
 
 
-### Why?
+### Why? [&#x219F;](#contents)
 
 Using lmug as the basis for your web application has a number of
 benefits:
@@ -50,7 +65,7 @@ Without a basic understanding of lmug, you cannot write middleware, and
 you may find debugging your application more difficult.
 
 
-## Installation
+## Installation [&#x219F;](#contents)
 
 Just add it to your ``rebar.config`` deps:
 
@@ -68,7 +83,7 @@ $ rebar3 compile
 ```
 
 
-## Usage
+## Usage [&#x219F;](#contents)
 
 NOTE: the code in this section doesn't work yet! One of the first goals
 is to get to this point :-)
@@ -83,7 +98,7 @@ $ make repl
 ```
 
 
-### Simple Example
+### Simple Example [&#x219F;](#contents)
 
 Ordinarily you would use lmug middleware in a project that was running a
 supported web server and which included the lmug adaptor for that web server.
@@ -94,7 +109,8 @@ application. If you are familiar with Clojure's Ring, then this will look
 ```lisp
 (include-lib "clj/include/compose.lfe")
 
-(defun identity-handler (handler)
+(defun identity-mw (handler)
+  "An identity middleware handler."
   handler)
 
 (set chain (-> (lmug:response)
@@ -111,10 +127,25 @@ Then, to run it, simply do the following:
 ```
 
 
-## Details
+### Applications [&#x219F;](#contents)
+
+The example usage above shows how one can chain together, but it doesn't
+illustrate real-world usage. The lmug library is meant to be used in
+conjunction with other lmug libraries (e.g., middleware for converting the
+body of a response to JSON) and web server adaptors (which allow you to write
+a single application that is runnable on any supported web server).
+
+The simplest lmug adaptor is for the Erlang OTP http server. Here's an
+example of an lmug application running on OTP inets/httpd:
+
+```lisp
+TBD
+```
+
+## Details [&#x219F;](#contents)
 
 
-### Handlers
+### Handlers [&#x219F;](#contents)
 
 lmug handlers are functions that define your web application. They take
 one argument, a map representing a HTTP request, and return a map
@@ -124,7 +155,7 @@ appropriate form that will allow the configured HTTP server (e.g., YAWS,
 Cowboy, OTP httpd, etc.) to return an HTTP response.
 
 
-### Middleware
+### Middleware [&#x219F;](#contents)
 
 lmug middleware are higher-level functions that add additional
 functionality to handlers. The first argument of a middleware function
@@ -132,7 +163,26 @@ should be a handler, and its return value should be a new handler
 function.
 
 
-## lmug?
+### Adaptors [&#x219F;](#contents)
+
+lmug adaptors are what allow developers to write a single web application
+and then run them on multiple (supported) web servers. In a nutshell, lmug
+adaptors transform:
+
+* a web server's request into an lmug request record, and
+* lmug's reponse record into a web server's response data format
+
+Currently the following adaptors are being developed (status given in
+brackets):
+
+* Barista (an LFE web server that wraps inets http) - [ALPHA]
+* OTP inets http - [IN DEVELOPMENT]
+* YAWS - [IN DEVELOPMENT]
+* Elli - [PLANNING]
+* Cowboy - [NOT STARTED]
+
+
+## The Name? [&#x219F;](#contents)
 
 What's with the name? Well, there was lfest ... the web app routing
 party. What would be at an LFE routing party? Lots of mugs, I guess.
