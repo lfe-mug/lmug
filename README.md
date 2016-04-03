@@ -52,19 +52,16 @@ you may find debugging your application more difficult.
 Just add it to your ``rebar.config`` deps:
 
 ```erlang
-
-    {deps, [
-        ...
-        {lmug, ".*", {git, "git@github.com:lfex/lmug.git", "master"}}
-      ]}.
+{deps, [
+    ...
+    {lmug, ".*", {git, "git@github.com:lfex/lmug.git", "master"}}
+  ]}.
 ```
 
 And then do the usual:
 
 ```bash
-
-    $ rebar get-deps
-    $ rebar compile
+$ rebar3 compile
 ```
 
 
@@ -83,41 +80,33 @@ $ make repl
 ```
 
 
-### Hello World
+### Simple Example
 
-```cl
-> (slurp "src/lmug.lfe")
-#(ok lmug)
-> (defun handler (request)
-    (make-response
-      status 200
-      headers '(#("content-type" "text/plain"))
-      body "Hello World"))
-handler
-> (set `#(ok ,pid) (run #'handler/1))
-#(ok <0.55.0>)
+Ordinarily you would use lmug middleware in a project that was running a
+supported web server and which included the lmug adaptor for that web server.
+Below is an example showing similar to what you would have in a lmug web
+application. If you are familiar with Clojure's Ring, then this will look
+*very* familiar (though with a Lisp-2 flavor ...):
+
+```lisp
+(include-lib "clj/include/compose.lfe")
+(include-lib "lmug/include/request.lfe")
+(include-lib "lmug/include/response.lfe")
+
+(defun identity-handler (handler)
+  handler)
+
+(set chain (-> (lmug:response)
+               (identity-handler)
+               (lmug-mw-content-type:wrap)
+               (identity-handler)))
 ```
 
-To check your new hanlder:
+Then, to run it, simply do the following:
 
-```bash
-$ curl -D- -X GET http://localhost:1206/
-HTTP/1.1 200 OK
-Server: inets/5.10.2
-Date: Thu, 28 Aug 2014 20:30:52 GMT
-Content-Length: 11
-Content-Type: text/plain
-
-Hello World
-```
-
-If you want to run on a non-default port (or pass other options) or if you
-are using with other projects, please use the adapter module directly. For
-example:
-
-```cl
-(lmug-barista-adapter:run #'handler/1 '(#(port 8000)))
-#(ok <0.54.0>)
+```lisp
+> (funcall chain (make-request uri "http://localhost/file.json"))
+#(response 200 (#("Content-Type" "application/json")) ())
 ```
 
 
