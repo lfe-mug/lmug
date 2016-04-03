@@ -1,10 +1,10 @@
 (defrecord request
-  (server-port 1206)
+  (server-port 8080)
   (server-name "")
   (remote-addr "")
   (uri "")
   (path "")
-  query-params
+  (query-params '())
   (scheme "")
   (method 'get)
   (content-type 'unknown-content-type)
@@ -12,8 +12,8 @@
   (content-encoding 'unknown-content-encoding)
   (ssl-client-cert 'unknown-ssl-client-cert)
   (headers '())
-  body
-  orig)
+  (body "")
+  (orig ""))
 
 (defun loaded-request ()
   "This is just a dummy function for display purposes when including from the

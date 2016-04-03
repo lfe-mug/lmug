@@ -14,3 +14,11 @@
 (defun response (handler opts)
   "Convenience function; alias for ``#'lmug-response:response/2``."
   (lmug-response:response handler opts))
+
+(defun request ()
+  "Convenience function; alias for ``#'lmug-request:request/0``."
+  (lmug-request:request))
+
+(defun request (opts)
+  "Convenience function; alias for ``#'lmug-request:request/1``."
+  (lmug-request:request opts))
