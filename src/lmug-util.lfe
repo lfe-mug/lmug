@@ -1,4 +1,5 @@
 (defmodule lmug-util
+  (doc "lmug utility functions.")
   (export all))
 
 (include-lib "inets/include/httpd.hrl")
