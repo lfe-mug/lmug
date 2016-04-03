@@ -61,7 +61,7 @@
       query-params (parse-query-string uri)
       ;; XXX figure out how to get the scheme
       scheme 'unknown-scheme
-      request-method (normalize-http-verb (mod-method data))
+      method (normalize-http-verb (mod-method data))
       ;; XXX figure out how to get the content-type
       content-type 'unknown-content-type
       content-length (length body)
