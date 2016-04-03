@@ -12,7 +12,8 @@
   (ssl-client-cert 'unknown-ssl-client-cert)
   (headers         ())
   (body            'undefined)
-  (orig            'undefined))
+  (orig            'undefined)
+  (mw-data         ()))
 
 (defun loaded-request ()
   "This is just a dummy function for display purposes when including from the
