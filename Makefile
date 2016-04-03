@@ -55,7 +55,7 @@ docs-slate:
 docs: clean compile docs-clean $(SLATE_GIT_HACK)
 	@echo "\nBuilding docs ...\n"
 	@make docs-lodox
-	@make docs-slate
+	@#make docs-slate
 
 devdocs: docs
 	@echo

@@ -14,6 +14,7 @@ Infrastructure*
 * [Introduction](#introduction-)
   * [Why?](#why-)
 * [Installation](#installation-)
+* [Documentation](#documentation-)
 * [Usage](#usage-)
   * [Simple Example](#simple-example-)
   * [Applications](#applications-)
@@ -39,7 +40,7 @@ a standard abstraction for two things:
 * Erlang/LFE/BEAM HTTP servers, and
 * functions that can sit between the HTTP request and the HTTP response.
 
-The [SPEC](doc/SPEC.md) file, copied directly from the Clojure Ring
+The [SPEC](docs/SPEC.md) file, copied directly from the Clojure Ring
 project, provides a complete description of the lmug interface.
 
 
@@ -82,6 +83,11 @@ And then do the usual:
 $ rebar3 compile
 ```
 
+
+## Documentation [&#x219F;](#contents)
+
+* The [lmug spec](docs/SPEC.md) - based on the Clojure [Ring spec](https://github.com/ring-clojure/ring/blob/master/SPEC)
+* The [lmug API Reference](http://lfe-mug.github.io/lmug/api/current)
 
 ## Usage [&#x219F;](#contents)
 
