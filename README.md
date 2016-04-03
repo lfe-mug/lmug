@@ -56,9 +56,9 @@ benefits:
   Elastic Beanstalk and Heroku
 * Swap out the underlying HTTP server without changing any of your code
 
-If all goes well, lmug will be the current de facto standard base from
-which to write web applications in LFE. Higher level frameworks could
-then use lmug as a common basis.
+If all goes well, lmug will be the de facto standard, the base upon
+which one will write web applications in LFE. Higher level frameworks could
+then use lmug as a platform.
 
 Even though lmug provides only a low-level interface, it is useful to
 understand how it works even if you plan to use a higher-level interface.
