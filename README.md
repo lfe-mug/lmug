@@ -87,7 +87,7 @@ $ rebar3 compile
 ## Documentation [&#x219F;](#contents)
 
 * The [lmug spec](docs/SPEC.md) - based on the Clojure [Ring spec](https://github.com/ring-clojure/ring/blob/master/SPEC)
-* The [lmug API Reference](http://lfe-mug.github.io/lmug/api/current)
+* The [lmug API Reference](http://lfe-mug.github.io/lmug/current/api)
 
 ## Usage [&#x219F;](#contents)
 
