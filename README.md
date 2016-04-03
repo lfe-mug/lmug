@@ -1,9 +1,12 @@
 # lmug
 
+[![][lmug-logo]][lmug-logo-large]
+
+[lmug-logo]: resources/images/mugring-small-grey-3.png
+[lmug-logo-large]: resources/images/mugring-large-grey-3.png
+
 *LFE HTTP Server Abstraction and Web Application Middleware
 Infrastructure*
-
-<img src="resources/images/mugring-small-grey-2.png" />
 
 
 ## Introduction
