@@ -1,4 +1,5 @@
 (defmodule lmug-opt-tests
+  (doc "`lmug-opt` unit tests.")
   (behaviour ltest-unit)
   (export all))
 

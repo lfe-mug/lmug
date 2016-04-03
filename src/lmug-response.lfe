@@ -1,4 +1,5 @@
 (defmodule lmug-response
+  (doc "Manipulating `response`s.")
   (export all))
 
 (include-lib "lmug/include/response.lfe")
