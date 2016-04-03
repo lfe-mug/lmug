@@ -11,6 +11,6 @@
        {ref,"b84e9a8a1db6ffdd0cfe593fc8ad440ef72a5511"}},
   1},
  {<<"lutil">>,
-  {git,"git://github.com/lfex/lutil.git",
+  {git,"https://github.com/lfex/lutil.git",
        {ref,"ebc8523047c53764c7daca6be187600fd381cbf9"}},
   0}].
