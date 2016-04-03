@@ -79,6 +79,15 @@ corresponding values:
 ```
 
 ```
+'path
+  (Required, [binary()])
+  The request path as a list of binaries. For example:
+      /path/to/page.html => '(#"path" #"to" #"page.html")
+
+  Default: ()
+```
+
+```
 'query-string
   (Optional, string())
   The query string, if present.
