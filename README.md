@@ -114,16 +114,16 @@ application. If you are familiar with Clojure's Ring, then this will look
   "An identity middleware handler."
   handler)
 
-(set chain (-> (lmug:response)
-               (identity-handler)
-               (lmug-mw-content-type:wrap)
-               (identity-handler)))
+(set app (-> (lmug:response)
+             (identity-handler)
+             (lmug-mw-content-type:wrap)
+             (identity-handler)))
 ```
 
 Then, to run it, simply do the following:
 
 ```lisp
-> (funcall chain (lmug:request '(#(uri "http://localhost/file.json"))))
+> (funcall app (lmug:request '(#(uri "http://localhost/file.json"))))
 #(response 200 (#("Content-Type" "application/json")) ())
 ```
 
