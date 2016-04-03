@@ -1,4 +1,5 @@
 (defmodule lmug-request
+  (doc "Manipulating `request`s.")
   (export all))
 
 (include-lib "lmug/include/request.lfe")
