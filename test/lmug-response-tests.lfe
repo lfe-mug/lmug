@@ -1,4 +1,5 @@
 (defmodule lmug-response-tests
+  (doc "`lmug-response` unit tests.")
   (behaviour ltest-unit)
   (export all))
 
