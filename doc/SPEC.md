@@ -56,69 +56,51 @@ corresponding values:
 
 ```
 'server-port
-  (Required, Integer)
+  (Required, pos_integer())
   The port on which the request is being handled.
 ```
 
 ```
 'server-name
-  (Required, String)
+  (Required, string())
   The resolved server name, or the server IP address.
 ```
 
 ```
 'remote-addr
-  (Required, String)
+  (Required, string())
   The IP address of the client or the last proxy that sent the request.
 ```
 
 ```
 'uri
-  (Required, String)
+  (Required, string())
   The request URI. Must start with "/".
 ```
 
 ```
 'query-string
-  (Optional, String)
+  (Optional, string())
   The query string, if present.
 ```
 
 ```
 'scheme
-  (Required, Keyword)
-  The transport protocol, must be one of :http or :https.
+  (Required, atom())
+  The transport protocol, must be one of 'http or 'https.
 ```
 
 ```
 'request-method
-  (Required, Keyword)
-  The HTTP request method, must be a lowercase keyword corresponding to a
-  HTTP request method, such as :get or :post.
+  (Required, atom())
+  The HTTP request method, must be a lowercase atom corresponding to a
+  HTTP request method, such as 'get or 'post.
 ```
 
 ```
 'protocol
   (Required, String)
   The protocol the request was made with, e.g. "HTTP/1.1".
-```
-
-```
-'content-type [DEPRECATED]
-  (Optional, String)
-  The MIME type of the request body, if known.
-```
-
-```
-'content-length [DEPRECATED]
-  (Optional, Integer)
-  The number of bytes in the request body, if known.
-```
-
-```
-'character-encoding [DEPRECATED]
-  (Optional, String)
-  The name of the character encoding used in the request body, if known.
 ```
 
 ```
@@ -129,15 +111,15 @@ corresponding values:
 
 ```
 'headers
-  (Required, IPersistentMap)
-  An LFE record of downcased header name Strings to corresponding header
-  value Strings.
+  (Required, #{string() => string()})
+  An LFE record of downcased header name string()s to corresponding header
+  value string()s.
 ```
 
 ```
 'body
-  (Optional, InputStream)
-  An InputStream for the request body, if present.
+  (Optional, file:io_device())
+  A file:io_device() for the request body, if present.
 ```
 
 
@@ -148,34 +130,34 @@ corresponding values:
 
 ```
 'status
-  (Required, Integer)
+  (Required, integer())
   The HTTP status code, must be greater than or equal to 100.
 ```
 
 ```
 'headers
-  (Required, IPersistentMap)
+  (Required, #{string() => string(), string() => [string(),...]})
   An LFE proplist of HTTP header names to header values. These values may be
-  either Strings, in which case one name/value header will be sent in the
-  HTTP response, or a seq of Strings, in which case a name/value header will
-  be sent for each such String value.
+  either string()s, in which case one name/value header will be sent in the
+  HTTP response, or a list of string()s, in which case a name/value header will
+  be sent for each such string() value.
 ```
 
 ```
 'body
-  (Optional, {String, ISeq, File, InputStream})
+  (Optional, string() | list() | file:name() | file:io_device())
   A representation of the response body, if a response body is appropriate
   for the response's status code. The respond body is handled according to
   its type:
 
-  String:
+  string():
     Contents are sent to the client as-is.
-  ISeq:
-    Each element of the seq is sent to the client as a string.
-  File:
+  list():
+    Each element of the list is sent to the client as a string.
+  file:name():
     Contents at the specified location are sent to the client. The server may
     use an optimized method to send the file if such a method is available.
-  InputStream:
+  file:io_device():
     Contents are consumed from the stream and sent to the client. When the
-    stream is exhausted, it is .close'd.
+    stream is exhausted, it is file:close/1'd.
 ```
