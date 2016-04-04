@@ -1,0 +1,14 @@
+== lmug-util ==
+get-body-length/1
+parse-query-string/1
+split-query/1
+get-hostname/1
+get-host-data/1
+split-host-data/1
+normalize-http-verb/1
+get-version/0
+get-lmug-version/0
+
+== lmug-opt ==
+get/3
+get/2
