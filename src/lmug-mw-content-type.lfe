@@ -1,5 +1,6 @@
 (defmodule lmug-mw-content-type
   (doc "Middleware for automatically adding a content type to response maps.")
+  (behaviour lmug-mw)
   (export all))
 
 (include-lib "lmug/include/request.lfe")
