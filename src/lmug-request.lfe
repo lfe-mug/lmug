@@ -24,7 +24,10 @@
   - ``remote-addr``:
   - ``uri``:
   - ``path``:
+  - ``query-string``:
   - ``query-params``:
+  - ``form-params``:
+  - ``params``:
   - ``scheme``:
   - ``method``:
   - ``content-type``:
@@ -42,10 +45,13 @@
     remote-addr (lmug-opt:get opts 'remote-addr "")
     uri (lmug-opt:get opts 'uri "")
     path (lmug-opt:get opts 'path "")
+    query-string (lmug-opt:get opts 'query-string "")
     query-params (lmug-opt:get opts 'query-params '())
+    form-params (lmug-opt:get opts 'form-params '())
+    params (lmug-opt:get opts 'params '())
     scheme (lmug-opt:get opts 'scheme "")
     method (lmug-opt:get opts 'method 'get)
-    content-type (lmug-opt:get opts 'content-type 'unknown-content-type)
+    content-type (lmug-opt:get opts 'content-type "unknown/type")
     content-length (lmug-opt:get opts 'content-length 'undefined)
     content-encoding (lmug-opt:get opts
                        'content-encoding

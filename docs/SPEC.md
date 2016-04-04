@@ -1,6 +1,6 @@
 # lmug Spec
 
-*v0.0.1*
+*v0.0.2*
 
 lmug is defined in terms of the following:
 
@@ -85,13 +85,31 @@ corresponding values:
 ```
 
 ```
+'query-params
+  (Optional, list())
+  Data parsed from the query string, if present.
+```
+
+```
+'form-params
+  (Optional, list())
+  Form parameters, if present.
+```
+
+```
+'params
+  (Optional, list())
+  the union of all parameters.
+```
+
+```
 'scheme
   (Required, atom())
   The transport protocol, must be one of 'http or 'https.
 ```
 
 ```
-'request-method
+'method
   (Required, atom())
   The HTTP request method, must be a lowercase atom corresponding to a
   HTTP request method, such as 'get or 'post.
