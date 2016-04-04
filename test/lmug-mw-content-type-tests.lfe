@@ -1,4 +1,4 @@
-(defmodule lmug-mw-content-type-unit-tests
+(defmodule lmug-mw-content-type-tests
   (behaviour ltest-unit)
   (export all))
 
