@@ -185,7 +185,7 @@ brackets):
 * Barista (an LFE web server that wraps inets http) - [ALPHA]
 * OTP inets http - [IN DEVELOPMENT]
 * YAWS - [IN DEVELOPMENT]
-* Elli - [PLANNING]
+* Elli - [IN DEVELOPMENT]
 * Cowboy - [NOT STARTED]
 
 
