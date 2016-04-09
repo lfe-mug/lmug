@@ -68,7 +68,7 @@ corresponding values:
 
 ```
 'remote-addr
-  (Required, binary())
+  (Required, binary() | 'undefined')
   The IP address of the client or the last proxy that sent the request.
 ```
 
@@ -154,10 +154,10 @@ corresponding values:
 
 ```
 'body
-  (Optional, file:io_device() | 'undefined')
-  A file:io_device() for the request body, if present.
+  (Optional, binary() | iolist())
+  A binary() or iolist() representing the request body.
 
-  Default: 'undefined
+  Default: #""
 ```
 
 <!-- TODO: orig -->

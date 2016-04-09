@@ -1,7 +1,7 @@
 (defrecord request
   (server-port     8080)
   (server-name     #"")
-  (remote-addr     #"")
+  (remote-addr     'undefined)
   (uri             #"")
   (path            ())
   (query-string    #"")
@@ -11,7 +11,7 @@
   (protocol        #"HTTP/1.1")
   (ssl-client-cert 'unknown-ssl-client-cert)
   (headers         ())
-  (body            'undefined)
+  (body            #"")
   (orig            'undefined)
   (mw-data         ()))
 
