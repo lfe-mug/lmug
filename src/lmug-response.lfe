@@ -45,7 +45,7 @@
     (make-response
       status (lmug-opt:get opts 'status 200)
       headers (lmug-opt:get opts 'headers '())
-      body (lmug-opt:get opts 'body ""))))
+      body (lmug-opt:get opts 'body #""))))
 
 (defun header (resp header-key header-value)
   "Returns an updated lmug response with the specified header added."
@@ -57,22 +57,22 @@
 (defun get-header
   "Looks up a header in a lmug response (or request) case insensitively,
   returning the value of the header, or nil if not present."
-  ((resp "")
-    "")
+  ((resp #"")
+    #"")
   ((resp header-key) (when (is_atom header-key))
-    (get-header resp (atom_to_list header-key)))
+    (get-header resp (atom_to_binary header-key 'latin1)))
   ((resp header-key)
     (match-header (response-headers resp) header-key)))
 
 (defun content-type (resp content-type)
   "Returns an updated lmug response with a Content-Type header
   corresponding to the given content-type."
-  (header resp "Content-Type" content-type))
+  (header resp #"Content-Type" content-type))
 
 (defun match-header (headers header-key)
   "Return the first header that matches the given header-key."
   (case (match-headers headers header-key)
-    ('() '())
+    ('() #"")
     (headers (car headers))))
 
 (defun match-headers (headers sought-key)
