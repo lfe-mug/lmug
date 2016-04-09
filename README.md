@@ -79,7 +79,7 @@ Just add it to your ``rebar.config`` deps:
 ```erlang
 {deps, [
     ...
-    {lmug, ".*", {git, "git@github.com:lfe-mug/lmug.git", "master"}}
+    {lmug, {git, "https://github.com/lfe-mug/lmug.git", "master"}}
   ]}.
 ```
 
