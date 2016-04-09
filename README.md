@@ -1,5 +1,11 @@
 # lmug
 
+[![img](https://travis-ci.org/lfe-mug/lmug.svg)](https://travis-ci.org/lfe-mug/lmug)
+[![img](https://img.shields.io/github/tag/lfe-mug/lmug.svg)](https://github.com/lfe-mug/lmug/releases/latest)
+[![img](https://img.shields.io/badge/erlang-%E2%89%A5R16B03-red.svg)](http://www.erlang.org/downloads)
+[![img](https://img.shields.io/badge/docs-69%25-green.svg)](http://lfe-mug.github.io/lmug)
+[![img](https://img.shields.io/badge/license-Apache-blue.svg)](LICENSE)
+
 [![][lmug-logo]][lmug-logo-large]
 
 [lmug-logo]: resources/images/mugring-small-grey-3.png
@@ -73,7 +79,7 @@ Just add it to your ``rebar.config`` deps:
 ```erlang
 {deps, [
     ...
-    {lmug, ".*", {git, "git@github.com:lfe-mug/lmug.git", "master"}}
+    {lmug, {git, "https://github.com/lfe-mug/lmug.git", {tag, "0.0.3"}}}
   ]}.
 ```
 
@@ -179,7 +185,7 @@ brackets):
 * Barista (an LFE web server that wraps inets http) - [ALPHA]
 * OTP inets http - [IN DEVELOPMENT]
 * YAWS - [IN DEVELOPMENT]
-* Elli - [PLANNING]
+* Elli - [IN DEVELOPMENT]
 * Cowboy - [NOT STARTED]
 
 
