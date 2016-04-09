@@ -62,82 +62,119 @@ corresponding values:
 
 ```
 'server-name
-  (Required, string())
+  (Required, binary())
   The resolved server name, or the server IP address.
 ```
 
 ```
 'remote-addr
-  (Required, string())
+  (Required, binary() | 'undefined')
   The IP address of the client or the last proxy that sent the request.
 ```
 
 ```
 'uri
-  (Required, string())
+  (Required, binary())
   The request URI. Must start with "/".
 ```
 
 ```
+'path
+  (Required, [binary()])
+  The request path as a list of binaries. For example:
+      /path/to/page.html => '(#"path" #"to" #"page.html")
+
+  Default: ()
+```
+
+```
 'query-string
-  (Optional, string())
+  (Optional, binary())
   The query string, if present.
 ```
 
 ```
 'query-params
-  (Optional, list())
-  Data parsed from the query string, if present.
+  (Optional, [{binary(), any()}])
+  An LFE proplist of parsed and URL decoded query parameters.
 ```
 
 ```
 'form-params
-  (Optional, list())
+  (Optional, [{binary(), any()}])
   Form parameters, if present.
 ```
 
 ```
 'params
-  (Optional, list())
+  (Optional, [{binary(), any()}])
   the union of all parameters.
 ```
 
 ```
 'scheme
-  (Required, atom())
+  (Required, http | https)
   The transport protocol, must be one of 'http or 'https.
 ```
 
 ```
 'method
-  (Required, atom())
+  (Required, 'options' | 'get' | 'head' | 'post' |
+             'put' | 'delete' | 'trace'
   The HTTP request method, must be a lowercase atom corresponding to a
   HTTP request method, such as 'get or 'post.
+
+  Default: 'get
 ```
 
 ```
 'protocol
-  (Required, String)
+  (Required, binary()))
   The protocol the request was made with, e.g. "HTTP/1.1".
+
+  Default: #"HTTP/1.1"
 ```
 
 ```
 'ssl-client-cert
-  (Optional, X509Certificate)
+  (Optional, binary() | 'undefined')
   The SSL client certificate, if supplied.
+
+  Default: 'unknown-ssl-client-cert
 ```
 
 ```
 'headers
-  (Required, #{string() => string()})
-  An LFE record of downcased header name string()s to corresponding header
-  value string()s.
+  (Required, [{binary(), binary()}])
+  An LFE proplist of downcased header name binaries to corresponding header
+  value binaries.
+
+  Default: ()
 ```
 
 ```
 'body
-  (Optional, file:io_device())
-  A file:io_device() for the request body, if present.
+  (Optional, binary() | iolist())
+  A binary() or iolist() representing the request body.
+
+  Default: #""
+```
+
+```
+'orig
+  (Optional, 'undefined' | any())
+  A representation of the original request (Cowboy, Elli, Yaws, etc)
+  that has been adapted for lmug.
+
+  Default: 'undefined
+```
+
+```
+'mw-data
+  (Optional, list())
+  A list of any middleware-specific data.
+
+  Default: ()
 ```
 
 
@@ -150,25 +187,31 @@ corresponding values:
 'status
   (Required, integer())
   The HTTP status code, must be greater than or equal to 100.
+
+  Default: 200
 ```
 
 ```
 'headers
-  (Required, #{string() => string(), string() => [string(),...]})
+  (Required, [{binary(), binary()}
+              | {binary(), [{binary(), [{binary(), binary()},...]}]}
+              | [atom() | {atom(), term()}])
   An LFE proplist of HTTP header names to header values. These values may be
-  either string()s, in which case one name/value header will be sent in the
-  HTTP response, or a list of string()s, in which case a name/value header will
-  be sent for each such string() value.
+  either binaries, in which case one name/value header will be sent in the
+  HTTP response, or a list of binaries, in which case a name/value header will
+  be sent for each such binary value.
+
+  Default: ()
 ```
 
 ```
 'body
-  (Optional, string() | list() | file:name() | file:io_device())
+  (Optional, binary() | list() | file:name() | file:io_device())
   A representation of the response body, if a response body is appropriate
   for the response's status code. The respond body is handled according to
   its type:
 
-  string():
+  binary():
     Contents are sent to the client as-is.
   list():
     Each element of the list is sent to the client as a string.
@@ -178,4 +221,6 @@ corresponding values:
   file:io_device():
     Contents are consumed from the stream and sent to the client. When the
     stream is exhausted, it is file:close/1'd.
+
+    Default: ""
 ```
