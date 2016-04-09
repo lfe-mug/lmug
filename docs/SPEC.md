@@ -137,7 +137,7 @@ corresponding values:
 
 ```
 'ssl-client-cert
-  (Optional, binary() | 'unknown-ssl-client-cert)
+  (Optional, binary() | 'undefined')
   The SSL client certificate, if supplied.
 
   Default: 'unknown-ssl-client-cert
@@ -160,9 +160,22 @@ corresponding values:
   Default: #""
 ```
 
-<!-- TODO: orig -->
+```
+'orig
+  (Optional, 'undefined' | any())
+  A representation of the original request (Cowboy, Elli, Yaws, etc)
+  that has been adapted for lmug.
 
-<!-- TODO: mw-data -->
+  Default: 'undefined
+```
+
+```
+'mw-data
+  (Optional, list())
+  A list of any middleware-specific data.
+
+  Default: ()
+```
 
 
 ## Response Record
