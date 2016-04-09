@@ -208,6 +208,8 @@ The lmug middleware behaviour defines two callback functions:
 
 * ``wrap/1`` - takes a handler as an argument
 * ``wrap/2``- takes a handler and a proplist of middleware-specific options
+  (or any other argument a middleware author may want to pass into the wrap
+  function)
 
 The ``wrap`` callback functions are higher-level functions that add additional
 functionality to handlers. The return value of the ``wrap`` functions should 
