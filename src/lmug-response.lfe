@@ -48,14 +48,14 @@
       body (lmug-opt:get opts 'body ""))))
 
 (defun header (resp header-key header-value)
-  "Returns an updated Ring response with the specified header added."
+  "Returns an updated lmug response with the specified header added."
   (set-response-headers
     resp
     (cons `#(,header-key ,header-value)
           (response-headers resp))))
 
 (defun get-header
-  "Looks up a header in a Ring response (or request) case insensitively,
+  "Looks up a header in a lmug response (or request) case insensitively,
   returning the value of the header, or nil if not present."
   ((resp "")
     "")
@@ -65,7 +65,7 @@
     (match-header (response-headers resp) header-key)))
 
 (defun content-type (resp content-type)
-  "Returns an updated Ring response with the a Content-Type header
+  "Returns an updated lmug response with a Content-Type header
   corresponding to the given content-type."
   (header resp "Content-Type" content-type))
 
