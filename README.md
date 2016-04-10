@@ -129,8 +129,8 @@ flavour ...):
 Then, to run it, simply do the following:
 
 ```lisp
-> (funcall app (lmug:request '(#(uri "http://localhost/file.json"))))
-#(response 200 (#("Content-Type" "application/json")) ())
+> (funcall app (lmug:request '(#(uri #"http://localhost/file.json"))))
+#(response 200 (#(#"Content-Type" #"application/json")) ())
 ```
 
 
@@ -176,7 +176,7 @@ response body to be the client's IP address:
 (defun my-ip?
   (((match-request remote-addr ip))
     (make-response status 200
-                   headers '(#("Content-Type" "text/plain"))
+                   headers '(#(#"Content-Type" #"text/plain"))
                    body ip)))
 ```
 
@@ -236,7 +236,7 @@ To apply this middleware to a handler:
 
 ```lisp
 (defun app ()
-  (content-type:wrap another-handler "text/html"))
+  (content-type:wrap another-handler #"text/html"))
 ```
 
 ### Adaptors [&#x219F;](#contents)
