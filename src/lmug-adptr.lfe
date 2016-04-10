@@ -3,8 +3,8 @@
 
 (defun behaviour_info
   (('callbacks)
-    '(#(->request 1) #(->request 2)
-      #(response-> 1) #(response-> 2)
-      #(handler-> 1) #(handler-> 2)))
+    '(#(convert-request 1) #(convert-request 2)
+      #(convert-response 1) #(convert-response 2)
+      #(convert-handler 1) #(convert-handler 2)))
   ((_)
     'undefined))
