@@ -7,5 +7,5 @@
 
 (deftest request
   (is-equal (make-request) (lmug-request:request))
-  (is-equal (make-request path "/ponies")
-            (lmug-request:request `(#(path "/ponies")))))
+  (is-equal (make-request path '(#"ponies"))
+            (lmug-request:request '(#(path (#"ponies"))))))
