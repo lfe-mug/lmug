@@ -50,16 +50,15 @@
     scheme (lmug-opt:get opts 'scheme 'http)
     method (lmug-opt:get opts 'method 'get)
     ssl-client-cert (lmug-opt:get opts 'ssl-client-cert 'undefined)
-    headers (list* `#(#"Content-Type"
-                      ,(lmug-opt:get opts 'content-type #"unknown/type"))
-                   ;; XXX: Don't add if 'undefined.
-                   ;; `#(#"Content-Length"
-                   ;;    ,(lmug-opt:get opts 'content-length 'undefined))
-                   ;;; XXX: Don't add if 'undefined.
-                   ;; `#(#"Content-Encoding"
-                   ;;    ,(lmug-opt:get opts
-                   ;;       'content-encoding
-                   ;;       'unknown-content-encoding))
-                   (lmug-opt:get opts 'headers '()))
+    headers (headers '() '(#"Content-Type"
+                           #"Content-Length"
+                           #"Content-Encoding"))
     body (lmug-opt:get opts 'body #"")
     orig (lmug-opt:get opts 'orig 'undefined)))
+
+(defun headers
+  ([acc `(,opt . ,opts)]
+   (case (lmug-opt:get opts opt 'undefined)
+     ('undefined (headers acc opts))
+     (value      (headers acc `(#(,opt ,value) . ,opts)))))
+  ([acc ()] acc))
