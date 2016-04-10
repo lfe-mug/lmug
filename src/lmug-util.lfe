@@ -53,19 +53,19 @@
         (uri (mod-request_uri data))
         (body (mod-entity_body data)))
     (make-request
-      server-port    port
-      server-name    host
-      remote-addr    remote-host
+      server-port port
+      server-name host
+      remote-addr remote-host
       ;; XXX the following need to be sorted out
-      uri            uri                 ; this should have query params
-      path           uri                 ; this should be with no query params
-      query-params   (parse-query-string uri)
+      uri uri  ; this should have query params
+      path uri ; this should be with no query params
+      query-params (parse-query-string uri)
       ;; XXX figure out how to get the scheme
-      scheme         'unknown-scheme
-      method         (normalize-http-verb (mod-method data))
-      headers        (mod-parsed_header data)
-      body           body
-      orig           data)))
+      scheme 'unknown-scheme
+      method (normalize-http-verb (mod-method data))
+      headers (mod-parsed_header data)
+      body body
+      orig data)))
 
 (defun get-response (lmug-request-data)
   "Translate an lmug request to an lmug response."
