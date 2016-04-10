@@ -112,20 +112,18 @@ $ make repl
 Ordinarily you would use lmug middleware in a project that was running a
 supported web server and which included the lmug adaptor for that web server.
 Below is an example showing similar to what you would have in a lmug web
-application. If you are familiar with Clojure's Ring, then this will look
-*very* familiar (though with a Lisp-2 flavor ...):
+application. It demonstrates the use of multiple middleware modules (the
+no-op/identify middleware is used as filler). If you are familiar with
+Clojure's Ring, then this will look *very* familiar (though with a Lisp-2
+flavour ...):
 
 ```lisp
 (include-lib "clj/include/compose.lfe")
 
-(defun identity-mw (handler)
-  "An identity middleware handler."
-  handler)
-
 (set app (-> (lmug:response)
-             (identity-handler)
+             (lmug-mw-identity:wrap)
              (lmug-mw-content-type:wrap)
-             (identity-handler)))
+             (lmug-mw-identity:wrap)))
 ```
 
 Then, to run it, simply do the following:
@@ -164,8 +162,8 @@ At its core, an lmug web application consists of five components:
 
 ### Handlers [&#x219F;](#contents)
 
-Handlers are functions that define your web application. They take one 
-argument, a record representing an HTTP request, and return a record 
+Handlers are functions that define your web application. They take one
+argument, a record representing an HTTP request, and return a record
 representing an HTTP response.
 
 Here's a simple example handler that takes a request and sets the
@@ -212,8 +210,8 @@ The lmug middleware behaviour defines two callback functions:
   function)
 
 The ``wrap`` callback functions are higher-level functions that add additional
-functionality to handlers. The return value of the ``wrap`` functions should 
-be a new handler function. For most middleware, the new handler function will 
+functionality to handlers. The return value of the ``wrap`` functions should
+be a new handler function. For most middleware, the new handler function will
 call the original handler.
 
 Here is a simple example:
@@ -247,7 +245,7 @@ lmug adaptors are what (will) allow developers to write a single web application
 and then run them on multiple (supported) web servers. In a nutshell, lmug
 adaptors transform:
 
-* a web server's request into an lmug request record, 
+* a web server's request into an lmug request record,
 * lmug's reponse record into a web server's response data format, and
 * lmug handlers into the entry-point functions of a specific web server
 
