@@ -37,8 +37,8 @@
   "Adds a content-type header to the response. Used by ``#'wrap/2``.
   Returns a ``response`` record."
   (((match-request uri uri) resp opts)
-    (case (lmug-response:get-header resp "Content-Type")
-      ("" (let* ((overrides (lmug-opt:get opts 'mime-types))
-                 (mime-type (lmug-util:ext->mime-type uri overrides)))
-            (lmug-response:content-type resp mime-type)))
+    (case (lmug-response:get-header resp #"Content-Type")
+      (#"" (let* ((overrides (lmug-opt:get opts 'mime-types))
+                  (mime-type (lmug-util:ext->mime-type uri overrides)))
+             (lmug-response:content-type resp mime-type)))
       (_ resp))))
