@@ -193,9 +193,7 @@ corresponding values:
 
 ```
 'headers
-  (Required, [{binary(), binary()}
-              | {binary(), [{binary(), [{binary(), binary()},...]}]}
-              | [atom() | {atom(), term()}])
+  (Required, [{binary(), binary() | [binary()]}])
   An LFE proplist of HTTP header names to header values. These values may be
   either binaries, in which case one name/value header will be sent in the
   HTTP response, or a list of binaries, in which case a name/value header will
