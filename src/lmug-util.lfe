@@ -34,14 +34,15 @@
     hostname))
 
 (defun split-query (url)
-  (string:tokens url "?"))
+  (binary:split url #"?"))
 
 (defun parse-query-string (url)
   (case (split-query url)
     (`(,host ,query)
-      (httpd:parse_query query))
+     (lc ((<- `#(,k ,v) (httpd:parse_query query)))
+       `#(,(->binary k) ,(->binary v))))
     (`(,host)
-      '())))
+     ())))
 
 (defun httpd->lmug-request (data)
   "Every web server that gets an lmug adapter needs to implement a function
@@ -50,7 +51,7 @@
   defined in the lmug Spec)."
   (let ((`(,host ,port) (get-host-data (mod-absolute_uri data)))
         (remote-host (get-hostname (mod-init_data data)))
-        (uri (mod-request_uri data))
+        (uri (->binary (mod-request_uri data)))
         (body (mod-entity_body data)))
     (make-request
       server-port port
@@ -197,3 +198,7 @@
     #(.xpm      #"image/x-xpixmap")
     #(.xwd      #"image/x-xwindowdump")
     #(.zip      #"application/zip")))
+
+(defun ->binary
+  ([string] (when (is_list string)) (list_to_binary string))
+  ([bin]    (when (is_binary bin))  bin))
