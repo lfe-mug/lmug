@@ -95,7 +95,7 @@
 (defun ext->mime-type (ext)
   "The same as #'ext->mime-type/2 but with an empty list for optional
   mime-types."
-  (ext->mime-type ext '()))
+  (ext->mime-type ext ()))
 
 (defun ext->mime-type
   "Get the mimetype from the filename extension. Takes an optional proplist of

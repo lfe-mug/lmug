@@ -8,7 +8,7 @@
 
 (defun wrap (handler)
   "The same as #'wrap/2 but with an empty list for options."
-  (wrap handler '()))
+  (wrap handler ()))
 
 (defun wrap (handler opts)
   "Middleware that adds a content-type header to the response if one is not
@@ -31,7 +31,7 @@
 
 (defun add-content-type (req resp)
   "The same as #'add-content-type/3 but with an empty list for options."
-  (add-content-type req resp '()))
+  (add-content-type req resp ()))
 
 (defun add-content-type
   "Adds a content-type header to the response. Used by ``#'wrap/2``.
