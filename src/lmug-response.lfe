@@ -10,7 +10,7 @@
   middleware chain, only at the beginning.
 
   Returns a function which expects an lmug request as the only argument."
-  (response 'undefined '()))
+  (response 'undefined ()))
 
 (defun response (_handler)
   "Create a default response suitable for use as an lmug handler. This
@@ -22,7 +22,7 @@
   should almost never need to use this function directly.
 
   Returns a function which expects an lmug request as the only argument."
-  (response _handler '()))
+  (response _handler ()))
 
 (defun response (_handler opts)
   "Create a default response suitable for use as an lmug handler. This
@@ -44,7 +44,7 @@
   (lambda (_req)
     (make-response
       status (lmug-opt:get opts 'status 200)
-      headers (lmug-opt:get opts 'headers '())
+      headers (lmug-opt:get opts 'headers ())
       body (lmug-opt:get opts 'body #""))))
 
 (defun header (resp header-key header-value)
@@ -72,7 +72,7 @@
 (defun match-header (headers header-key)
   "Return the first header that matches the given header-key."
   (case (match-headers headers header-key)
-    ('() #"")
+    (() #"")
     (headers (car headers))))
 
 (defun match-headers (headers sought-key)

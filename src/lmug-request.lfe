@@ -8,7 +8,7 @@
   "Create a default request suitable for use by lmug handlers.
 
   Returns an lmug ``request`` record."
-  (request '()))
+  (request ()))
 
 (defun request (opts)
   "Create a default request suitable for use by lmug handlers. The
@@ -42,20 +42,20 @@
     server-name (lmug-opt:get opts 'server-name #"")
     remote-addr (lmug-opt:get opts 'remote-addr 'undefined)
     uri (lmug-opt:get opts 'uri #"")
-    path (lmug-opt:get opts 'path '())
+    path (lmug-opt:get opts 'path ())
     query-string (lmug-opt:get opts 'query-string #"")
-    query-params (lmug-opt:get opts 'query-params '())
-    form-params (lmug-opt:get opts 'form-params '())
-    params (lmug-opt:get opts 'params '())
+    query-params (lmug-opt:get opts 'query-params ())
+    form-params (lmug-opt:get opts 'form-params ())
+    params (lmug-opt:get opts 'params ())
     scheme (lmug-opt:get opts 'scheme 'http)
     method (lmug-opt:get opts 'method 'get)
     ssl-client-cert (lmug-opt:get opts 'ssl-client-cert 'undefined)
-    headers (headers '() '(#"Content-Type"
+    headers (headers () '(#"Content-Type"
                            #"Content-Length"
                            #"Content-Encoding"))
     body (lmug-opt:get opts 'body #"")
     orig (lmug-opt:get opts 'orig 'undefined)
-    mw-data (lmug-opt:get opts 'mw-data '())))
+    mw-data (lmug-opt:get opts 'mw-data ())))
 
 (defun set-data (req key value)
   "Returns an updated lmug request with the ``mw-data`` field updated with
