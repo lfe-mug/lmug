@@ -13,11 +13,21 @@
   (++ (lutil:get-version)
       `(#(lmug ,(get-lmug-version)))))
 
+(defun http-verbs ()
+  "The list of allowed HTTP verbs. See doc/spec.md for more info."
+  '(get head post put delete trace options connect patch))
+
 (defun normalize-http-verb
+  ((verb) (when (is_binary verb))
+   (normalize-http-verb (binary_to_list verb)))
   ((verb) (when (is_list verb))
-    (list_to_atom (string:to_lower verb)))
+   (validate-http-verb (list_to_atom (string:to_lower verb))))
   ((verb) (when (is_atom verb))
-    (normalize-http-verb (atom_to_list verb))))
+   (normalize-http-verb (atom_to_list verb))))
+
+(defun validate-http-verb (verb)
+  "If a given verb is valid, return it, otherwise throw an error."
+  (if (lists:member verb (http-verbs)) verb (error `#(invalid-verb ,verb))))
 
 (defun split-host-data (host-data)
   (binary:split (car (filename:split host-data)) #":"))

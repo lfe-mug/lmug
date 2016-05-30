@@ -119,8 +119,8 @@ corresponding values:
 
 ```
 'method
-  (Required, 'options' | 'get' | 'head' | 'post' |
-             'put' | 'delete' | 'trace'
+  (Required, 'get' | 'head' | 'post' | 'put' | 'delete' |
+             'trace' | 'options' | 'connect' | 'patch'
   The HTTP request method, must be a lowercase atom corresponding to a
   HTTP request method, such as 'get or 'post.
 
