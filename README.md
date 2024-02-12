@@ -1,19 +1,13 @@
 # lmug
 
-[![img](https://travis-ci.org/lfe-mug/lmug.svg)](https://travis-ci.org/lfe-mug/lmug)
-[![img](https://img.shields.io/github/tag/lfe-mug/lmug.svg)](https://github.com/lfe-mug/lmug/releases/latest)
-[![img](https://img.shields.io/badge/erlang-%E2%89%A5R16B03-red.svg)](http://www.erlang.org/downloads)
-[![img](https://img.shields.io/badge/docs-69%25-green.svg)](http://lfe-mug.github.io/lmug)
-[![img](https://img.shields.io/badge/license-Apache-blue.svg)](LICENSE)
+[![Build Status][gh-actions-badge]][gh-actions]
+[![LFE Versions][lfe-badge]][lfe]
+[![Erlang Versions][erlang-badge]][versions]
+[![Tags][github-tags-badge]][github-tags]
 
-[![][lmug-logo]][lmug-logo-large]
+*LFE HTTP Server Abstraction and Web Application Middleware Infrastructure*
 
-[lmug-logo]: resources/images/mugring-small-grey-3.png
-[lmug-logo-large]: resources/images/mugring-large-grey-3.png
-
-*LFE HTTP Server Abstraction and Web Application Middleware
-Infrastructure*
-
+[![Project Logo][logo]][logo-large]
 
 #### Contents
 
@@ -32,7 +26,6 @@ Infrastructure*
   * [Adaptors](#adaptors-)
 * [The Name?](#the-name-)
 
-
 ## Introduction [&#x219F;](#contents)
 
 lmug is an LFE web applications library inspired by
@@ -50,7 +43,6 @@ a standard abstraction for two things:
 
 The [SPEC](docs/SPEC.md) file, copied directly from the Clojure Ring
 project, provides a complete description of the lmug interface.
-
 
 ### Why? [&#x219F;](#contents)
 
@@ -73,7 +65,6 @@ understand how it works even if you plan to use a higher-level interface.
 Without a basic understanding of lmug, you cannot write middleware, and
 you may find debugging your application more difficult.
 
-
 ## Installation [&#x219F;](#contents)
 
 Just add it to your ``rebar.config`` deps:
@@ -81,31 +72,28 @@ Just add it to your ``rebar.config`` deps:
 ```erlang
 {deps, [
     ...
-    {lmug, {git, "https://github.com/lfe-mug/lmug.git", {tag, "0.0.3"}}}
+    {lmug, "0.1.0}
   ]}.
 ```
 
 And then do the usual:
 
 ```bash
-$ rebar3 compile
+rebar3 compile
 ```
-
 
 ## Documentation [&#x219F;](#contents)
 
 * The [lmug spec](docs/SPEC.md) - based on the Clojure [Ring spec](https://github.com/ring-clojure/ring/blob/master/SPEC)
 * The [lmug API Reference](http://lfe-mug.github.io/lmug/current/api)
 
-
 ## Usage [&#x219F;](#contents)
 
 The usage examples below are done from the REPL:
 
 ```bash
-$ make repl
+make repl
 ```
-
 
 ### Simple Example [&#x219F;](#contents)
 
@@ -133,7 +121,6 @@ Then, to run it, simply do the following:
 #(response 200 (#(#"Content-Type" #"application/json")) ())
 ```
 
-
 ### Applications [&#x219F;](#contents)
 
 The example usage above shows how one can chain together, but it doesn't
@@ -159,7 +146,6 @@ At its core, an lmug web application consists of five components:
 * Middleware
 * Adaptor
 
-
 ### Handlers [&#x219F;](#contents)
 
 Handlers are functions that define your web application. They take one
@@ -184,11 +170,9 @@ This function returns a response record that lmug adaptors can then translate in
 
 The handler function can then be converted into a web application through a variety of different methods which will be covered in the next section.
 
-
 ### Requests [&#x219F;](#contents)
 
 As previously mentioned, lmug HTTP requests are represented by LFE records. Though the record fields are fixed, lmug provides a ``mw-data`` field for use by middleware, a proplist that middleware can update with its own keys and values. To see the list of supported request fields, be sure to read the [lmug spec](docs/SPEC.md)
-
 
 ### Responses [&#x219F;](#contents)
 
@@ -197,7 +181,6 @@ The lmug response record is created by a handler and contains three fields:
 * ``status`` - The HTTP status code, such as 200, 302, 404 etc.
 * ``headers`` - An LFE proplist of HTTP header names to header values.
 * ``body`` - A representation of the response body, if a response body is appropriate for the response's status code.
-
 
 ### Middleware [&#x219F;](#contents)
 
@@ -258,7 +241,6 @@ brackets):
 * Elli - [IN DEVELOPMENT]
 * Cowboy - [NOT STARTED]
 
-
 ## The Name? [&#x219F;](#contents)
 
 What's with the name? Well, there was lfest ... the web app routing
@@ -268,3 +250,16 @@ Full of tastey, hot LFE.
 Also, a mug is topologically equivalent to a ring. An lmug even more so.
 
 Besides, lhorse just sounds weird.
+
+[//]: ---Named-Links---
+
+[logo]: resources/images/mugring-small-grey-3.png
+[logo-large]: resources/images/mugring-large-grey-3.png
+[gh-actions-badge]: https://github.com/lfe-mug/lmug/workflows/ci%2Fcd/badge.svg
+[gh-actions]: https://github.com/lfe-mug/lmug/actions
+[lfe]: https://github.com/lfe/lfe
+[lfe-badge]: https://img.shields.io/badge/lfe-2.1-blue.svg
+[erlang-badge]: https://img.shields.io/badge/erlang-21%20to%2026-blue.svg
+[versions]: https://github.com/lfe-mug/lmug/blob/master/.github/workflows/cicd.yml
+[github-tags]: https://github.com/lfe-mug/lmug/tags
+[github-tags-badge]: https://img.shields.io/github/tag/lfe-mug/lmug.svg
