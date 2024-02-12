@@ -1,0 +1,67 @@
+name: ci/cd
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main, 'release/**', 'task/**', 'feature/**', 'epic/**']
+    tags: ['**']
+  pull_request:
+    branches: [ main, 'release/**', 'task/**', 'feature/**', 'epic/**']
+  schedule:
+  - cron: "20 4 24 * *"
+
+jobs:
+
+  core-builds:
+    name: Erlang ${{ matrix.otp_version }} build
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        otp_version: ['24', '25', '26']
+
+    steps:
+    - uses: actions/checkout@v3
+    - uses: erlef/setup-beam@v1
+      with:
+        otp-version: ${{ matrix.otp_version }}
+        rebar3-version: '3.22'
+    - name: Check rebar3 Version
+      run: rebar3 --version
+    - name: Compile
+      run: rebar3 compile
+    - name: Xref Checks
+      run: rebar3 xref
+    #- name: Dialyzer
+    #  run: rebar3 dialyzer
+    - name: Run Tests
+      run: rebar3 as test do compile,lfe ltest -tall
+    #- name: Test Coverage
+    #  run: rebar3 as test do proper -c, cover -v --min_coverage=0
+
+  old-builds:
+    name: Old Erlang ${{ matrix.otp_version }} build
+    runs-on: ubuntu-20.04
+
+    strategy:
+      matrix:
+        otp_version: ['21', '22', '23']
+
+    steps:
+    - uses: actions/checkout@v3
+    - uses: erlef/setup-beam@v1
+      with:
+        otp-version: ${{ matrix.otp_version }}
+        rebar3-version: '3.15'
+    - name: Check rebar3 Version
+      run: rebar3 --version
+    - name: Compile
+      run: rebar3 compile
+    - name: Xref Checks
+      run: rebar3 xref
+    #- name: Dialyzer
+    #  run: rebar3 dialyzer
+    - name: Run Unit Tests
+      run: rebar3 as test do compile,lfe ltest -tall
+    #- name: Test Coverage
+    #  run: rebar3 as test do proper -c, cover -v --min_coverage=0
