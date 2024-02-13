@@ -6,6 +6,6 @@
 
 (defun normalize-method
   ((method) (when (is_list method))
-    (list_to_atom (string:to_lower method)))
+   (list_to_atom (string:to_lower method)))
   ((method)
-    method))
+   method))
