@@ -1,11 +1,40 @@
-_build
-*.sublime-project
-*.sublime-workspace
-*.beam
+# MacOS
+.DS_Store
+
+# Erlang
 .eunit
-debug-*
-ebin/*
-bin/expm
-*.dump
+*.o
+*.beam
+*.plt
+erl_crash.dump
+.concrete/DEV_MODE
+
+# rebar 2.x
 .rebar
-log/*
+rel/example_project
+ebin/*.beam
+deps
+
+# rebar 3
+.rebar3
+_build/
+_checkouts/
+rebar.lock
+.rebar
+rebar/*
+.rebar/*
+rebar3.crashdump
+
+# Emacs
+*~
+\#*\#
+.\#*
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+
+# Project
+/docs/user-guide/build/
+/workbench
