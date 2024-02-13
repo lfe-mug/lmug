@@ -130,5 +130,3 @@ The threading macro (`->`) can be used to chain middleware together:
 Middleware is used often in lmug, and is used to provide much of its functionality beyond handling raw HTTP requests. Parameters, sessions, and file uploading are all handled by middleware in the lmug standard library.
 
 Note: middleware runs from bottom to top, and if any middleware creates a response, that will short-circuit and the middleware above will not be called.
-
-[Next Page - Creating responses](https://github.com/ring-clojure/ring/wiki/Creating-responses)
