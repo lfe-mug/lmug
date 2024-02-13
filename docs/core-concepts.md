@@ -11,42 +11,46 @@ A web application developed with lmug consists of four components:
 
 ## Handlers
 
-Handlers are functions that define your web application. **Synchronous** handlers take one argument, a map representing a HTTP request, and return a map representing the HTTP response.
+Handlers are functions that define your web application. **Synchronous** handlers take one argument, a map representing an [HTTP request](https://github.com/lfe-http/http/blob/main/src/http.request.lfe), and return a map representing the [HTTP response](https://github.com/lfe-http/http/blob/main/src/http.response.lfe).
 
 For example:
 
 ```lisp
 (defun what-is-my-ip (req)
-  #m(status 200
-     headers #m(content-type #"text/plain")
-     body (mref req 'remote-addr)))
+  (http.response:new
+   200
+   #m(#"content-type" #"text/plain")
+   (mref req 'remote-addr)))
 ```
 
-This function returns a map that lmug can translate into an [HTTP response](https://github.com/lfe-http/http). The response returns a plain text file that contains the IP address that was used to access the web application.
+This function returns a map that lmug uses as its [HTTP response](https://github.com/lfe-http/http/blob/main/src/http.response.lfe) abstraction. The response itself has plain text data that contains the IP address that was used to access the web application.
 
-Handlers may also be **asynchronous**. Handlers of this type take three arguments: the request map, a response callback and an exception callback.
+WIP: Handlers may also be **asynchronous**. Handlers of this type take three arguments: the request map, a response callback and an exception callback.
 
 For example:
 
 ```lisp
 (defun what-is-my-ip (req respond-fn)
-  (funcall respond-fn #m(status 200
-                         headers #m(content-type #"text/plain")
-                         body (mref req 'remote-addr))))
+  (funcall respond-fn (http.response:new
+                       200
+                       #m(#"content-type" #"text/plain")
+                       (mref req 'remote-addr))))
 ```
 
-Supporting both is done with by including both arities in your code:
+Supporting both is done in the usual way, by including both arities in your code:
 
 ```lisp
 (defun what-is-my-ip (req)
-  #m(status 200
-     headers #m(content-type #"text/plain")
-     body (mref req 'remote-addr)))
+  (http.response:new
+   200
+   #m(#"content-type" #"text/plain")
+   (mref req 'remote-addr)))
 
-(defun what-is-my-ip (req respond)
-  (funcall respond #m(status 200
-                      headers #m(content-type #"text/plain")
-                      body (mref req 'remote-addr))))
+(defun what-is-my-ip (req respond-fn)
+  (funcall respond-fn (http.response:new
+                       200
+                       #m(#"content-type" #"text/plain")
+                       (mref req 'remote-addr))))
 
 ```
 
@@ -62,7 +66,6 @@ The standard keys are:
 
 * `body`: A binary value for the request body.
 * `headers` An LFE map of lowercase header name strings to corresponding header value strings.
-
 * `method`: The HTTP request method, which is one of `GET`, `HEAD`, `OPTIONS`, `PATCH`, `PUT`, `POST`, or `DELETE`.
 * `path-segments`: A list of elements of the path (parsed from `'(url-parsed path)`).
 * `query-parsed`: A map of key/value pairs (parsed from `'(url-parsed query)`).
