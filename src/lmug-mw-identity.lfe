@@ -1,7 +1,8 @@
 (defmodule lmug-mw-identity
   (doc "Pass-through/no-op middleware.")
-  (behaviour lmug-mw)
-  (export all))
+  (behaviour lmug-middleware)
+  (export
+   (wrap 1) (wrap 2)))
 
 (defun wrap (handler)
   "The same as #'wrap/2 but with an empty list for options."

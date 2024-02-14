@@ -1,4 +1,4 @@
-(defmodule lmug-mw
+(defmodule lmug-middleware
   (export all))
 
 (defun behaviour_info
