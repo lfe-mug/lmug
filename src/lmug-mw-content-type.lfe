@@ -4,16 +4,15 @@
   (export
    (wrap 1) (wrap 2)))
 
-(defun filename-ext (url)
+(defun filename-ext
   "Returns the file extension of a filename or filepath."
-  (case (string:split (filename:extension url) ".")
-    ('(#"" #"") (lmug:default-content-type))
-    ('("" #"") (lmug:default-content-type))
-    ('(#"" "") (lmug:default-content-type))
-    ('("" "") (lmug:default-content-type))
-    (`(#"" ,ext) (lmug:ext->content-type ext))
-    (`("" ,ext) (lmug:ext->content-type ext))
-    (_ (lmug:default-content-type))))
+  ((url) (when (is_binary url))
+   (filename-ext (binary_to_list url)))
+  ((url) (when (is_list url))
+   (case (string:split (filename:extension url) ".")
+     ('("" "") (lmug:default-content-type))
+     (`("" ,ext) (lmug:ext->content-type ext))
+     (_ (lmug:default-content-type)))))
 
 (defun wrap (handler)
   "The same as #'wrap/2 but with an empty list for options."
