@@ -13,4 +13,6 @@
   (lambda (req)
     (let* ((id (integer_to_binary (trunc (* (rand:uniform) (math:pow 2 128)))))
            (resp (funcall handler (http.request:add-header req #"X-Request-ID" id))))
-      (http.response:add-header resp #"X-Request-ID" id))))
+      (http.response:add-header resp
+                                #"X-Request-ID"
+                                id))))

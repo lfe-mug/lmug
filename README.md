@@ -84,24 +84,27 @@ make repl
 
 Ordinarily you would use lmug middleware in a project that was running a
 supported web server and which included the lmug adaptor for that web server.
-Below is an example showing similar to what you would have in a lmug web
-application. It demonstrates the use of multiple middleware modules (the
-no-op/identify middleware is used as filler). If you are familiar with
-Clojure's Ring, then this will look *very* familiar (though with a Lisp-2
-flavour ...):
+Below is an example showing something similar to what you would have in an
+lmug web application: it demonstrates the use of multiple middleware modules (the
+no-op/identify middleware is used as filler, to help demonstrate more middleware).
+If you are familiar with Clojure's Ring library, then this will look *very*
+familiar (though with a Lisp-2 flavour ...):
 
 ```lisp
 (set app (clj:-> (lmug:app)
-                 (lmug-mw-request-id:wrap)))
+                 (lmug-mw-identity:wrap)
+                 (lmug-mw-request-id:wrap)
+                 (lmug-mw-content-type:wrap)))
 ```
 
 Then, to run it, simply do the following:
 
 ```lisp
-> (funcall app (http.request:new "http://localhost/file.json"))
+> (funcall app (http.request:new "http://localhost/tune.mp3"))
 #M(status 200
    headers
-     #M(#"X-Request-ID" #"324576052594390267291207124621528662016")
+     #M(#"Content-Type" #"audio/mpeg"
+        #"X-Request-ID" #"18401793772646571685423036237185286144")
    body #"")
 ```
 
