@@ -32,6 +32,13 @@
 
   %% configuration parameters similar to those in the config file specified
   %% on the command line. can be fetched with gas:get_env
-  {env, []}
- ]
-}.
+  {env, []},
+
+  %% Package metadata
+  {pkg_name, lmug},
+  {licenses, ["Apache 2.0"]},
+  {links, [
+    {"GitHub", "https://github.com/lfe-mug/lmug"},
+    {"Hex", "https://hex.pm/packages/lmug"}
+  ]}
+]}.
