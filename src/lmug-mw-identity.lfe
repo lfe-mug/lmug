@@ -8,6 +8,6 @@
   "The same as #'wrap/2 but with an empty list for options."
   (wrap handler '()))
 
-(defun wrap (handler _)
+(defun wrap (handler _opts)
   "Middleware that does absolutely nothing at all."
   handler)

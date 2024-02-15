@@ -3,6 +3,11 @@
        in other modules.")
   (export all))
 
+(defun app ()
+  ""
+  (lambda (_)
+    (http.response:new)))
+
 (defun body
   "The lmug library and adapters standardise on binary data for HTTP bodies."
   ((b) (when (is_binary b))

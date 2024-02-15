@@ -91,17 +91,18 @@ Clojure's Ring, then this will look *very* familiar (though with a Lisp-2
 flavour ...):
 
 ```lisp
-(set app (clj:-> (lmug:response)
-                 (lmug-mw-identity:wrap)
-                 (lmug-mw-content-type:wrap)
-                 (lmug-mw-identity:wrap)))
+(set app (clj:-> (lmug:app)
+                 (lmug-mw-request-id:wrap)))
 ```
 
 Then, to run it, simply do the following:
 
 ```lisp
-> (funcall app (lmug:request '(#(uri #"http://localhost/file.json"))))
-#(response 200 (#(#"Content-Type" #"application/json")) ())
+> (funcall app (http.request:new "http://localhost/file.json"))
+#M(status 200
+   headers
+     #M(#"X-Request-ID" #"324576052594390267291207124621528662016")
+   body #"")
 ```
 
 ### Applications [&#x219F;](#contents)
