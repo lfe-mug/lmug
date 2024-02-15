@@ -5,7 +5,7 @@
   {description, "LFE HTTP Server Abstraction and Web Application Middleware Infrastructure"},
 
   %% The version of the application
-  {vsn, "0.0.900"},
+  {vsn, "0.0.901"},
 
   %% All modules used by the application.
   {modules,
