@@ -136,7 +136,12 @@
 (defun content-types->proplist ()
   (maps:to_list (ext-content-types)))
 
-(defun ext->content-type (ext)
-  (maps:get (string:to_lower (binary_to_list ext))
-            (lmug:ext-content-types)
-            (default-content-type)))
+(defun ext->content-type
+  ((ext) (when (is_binary ext))
+   (ext->content-type (binary_to_list ext)))
+  ((ext) (when (is_atom ext))
+   (ext->content-type (atom_to_list ext)))
+  ((ext) (when (is_list ext))
+   (maps:get (string:to_lower ext)
+             (ext-content-types)
+             (default-content-type))))
