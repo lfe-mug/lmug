@@ -91,21 +91,22 @@ If you are familiar with Clojure's Ring library, then this will look *very*
 familiar (though with a Lisp-2 flavour ...):
 
 ```lisp
-(set app (clj:-> (lmug:app)
-                 (lmug-mw-identity:wrap)
-                 (lmug-mw-request-id:wrap)
-                 (lmug-mw-content-type:wrap)))
+lfe> (set app (clj:-> (lmug:app)
+                      (lmug-mw-identity:wrap)
+                      (lmug-mw-request-id:wrap)
+                      (lmug-mw-content-type:wrap)
+                      (lmug-mw-status-body:wrap)))
 ```
 
 Then, to run it, simply do the following:
 
 ```lisp
-> (funcall app (http.request:new "http://localhost/tune.mp3"))
+lfe > (funcall app (http.request:new "http://localhost/tune.mp3"))
 #M(status 200
    headers
      #M(#"Content-Type" #"audio/mpeg"
-        #"X-Request-ID" #"18401793772646571685423036237185286144")
-   body #"")
+        #"X-Request-ID" #"116765989140096673677588780992994213888")
+   body #"200")
 ```
 
 ### Applications [&#x219F;](#contents)

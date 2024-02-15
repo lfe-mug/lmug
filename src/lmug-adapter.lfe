@@ -1,4 +1,4 @@
-(defmodule lmug-adptr
+(defmodule lmug-adapter
   (export all))
 
 (defun behaviour_info
