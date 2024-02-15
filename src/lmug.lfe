@@ -13,7 +13,7 @@
   ((b) (when (is_binary b))
    b)
   ((b) (when (is_list b))
-   (binary_to_list b)))
+   (list_to_binary b)))
 
 (defun headers
   "The lmug library and adapters standardise on a map of binary key/value pairs
