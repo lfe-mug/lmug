@@ -5,8 +5,8 @@
    (wrap 1) (wrap 2)))
 
 (defun wrap (handler)
-  "The same as #'wrap/2 but with an empty list for options."
-  (wrap handler '()))
+  "The same as #'wrap/2 but with an empty map for options."
+  (wrap handler #m()))
 
 (defun wrap (handler _opts)
   "Middleware that sets the body to be the same as the status code."
