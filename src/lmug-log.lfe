@@ -17,11 +17,11 @@
          (user (lmug-util:bin->str (maps:get 'user url-parsed #"")))
          (user (if (== "" user)
                  user
-                 (++ delim user)))
+                 (++ delim user " ")))
          (referrer (lmug-util:bin->str
                     (maps:get #"referrer"
                              headers
-                             (maps:get #"referer" headers #""))))
+                             (maps:get #"referer" headers remote-addr))))
          (referrer (if (== "" referrer)
                      referrer
                      (++ delim referrer)))
@@ -29,7 +29,7 @@
          (user-agent (if (== "" user-agent)
                        user-agent
                        (++ delim user-agent))))
-     (io_lib:format "~s~s [~s] \"~s ~s\" ~p ~p~s~s"
+     (io_lib:format "~s~s[~s] '~s ~s' ~p ~p~s~s"
                     (list remote-addr
                           user
                           now

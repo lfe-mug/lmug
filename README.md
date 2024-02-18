@@ -90,18 +90,32 @@ no-op/identify middleware is used as filler, to help demonstrate more middleware
 If you are familiar with Clojure's Ring library, then this will look *very*
 familiar (though with a Lisp-2 flavour ...):
 
+If you'd like to test the logging middlware:
+
+``` lisp
+lfe> (logjam:set-dev-config)
+lfe> (application:ensure_all_started 'logjam)
+```
+
 ```lisp
 lfe> (set app (clj:-> (lmug:app)
-                      (lmug-mw-identity:wrap)
                       (lmug-mw-request-id:wrap)
                       (lmug-mw-content-type:wrap)
-                      (lmug-mw-status-body:wrap)))
+                      (lmug-mw-status-body:wrap)
+                      (lmug-mw-log-request:wrap #m(log-level notice))))
 ```
 
 Then, to run it, simply do the following:
 
 ```lisp
-lfe > (funcall app (http.request:new "http://localhost/tune.mp3"))
+lfe> (set req
+      (http.request:new
+       'get
+       #"http://alice:sekr1t@localhost/tune.mp3"
+       #""
+       #m(#"user-agent" #"LFE REPL")))
+lfe> (set req (mupd req 'remote-addr #"http://client.host"))
+lfe> (funcall app req)
 #M(status 200
    headers
      #M(#"Content-Type" #"audio/mpeg"
