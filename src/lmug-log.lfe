@@ -1,5 +1,4 @@
 (defmodule lmug-log
-  (behaviour gen_server)
   (export all))
 
 (include-lib "logjam/include/logjam.hrl")
@@ -15,7 +14,7 @@
        status)
    (let* ((delim " - ")
          (user (maps:get 'user url-parsed #""))
-         (now (calendar:system_time_to_rfc3339 (erlang:system_time)))
+         (now (calendar:system_time_to_rfc3339 (erlang:system_time 'second)))
          (method (string:to_upper (atom_to_list method)))
          (user (binary_to_list user))
          (user (if (== "" user)
@@ -29,7 +28,7 @@
          (user-agent (if (== "" user-agent)
                        user-agent
                        (++ delim user-agent))))
-     (io_lib:format "~s~s [~s] \"~s ~s\" ~s ~p~s~s"
+     (io_lib:format "~s~s [~s] \"~s ~s\" ~p ~p~s~s"
                     (list remote-addr
                           user
                           now
