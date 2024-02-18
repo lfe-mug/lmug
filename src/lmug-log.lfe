@@ -6,11 +6,10 @@
 (defun format
   ((`#m(body ,body
        method ,method
+       headers ,headers
        remote-addr ,remote-addr
        url ,url
        url-parsed ,url-parsed)
-       user-agent
-       referrer
        status)
    (let* ((delim " - ")
          (now (calendar:system_time_to_rfc3339 (erlang:system_time 'second)))
@@ -19,11 +18,14 @@
          (user (if (== "" user)
                  user
                  (++ delim user)))
-         (referrer (lmug-util:bin->str referrer))
+         (referrer (lmug-util:bin->str
+                    (maps:get #"referrer"
+                             headers
+                             (maps:get #"referer" headers #""))))
          (referrer (if (== "" referrer)
                      referrer
                      (++ delim referrer)))
-         (user-agent (lmug-util:bin->str user-agent))
+         (user-agent (lmug-util:bin->str (maps:get #"user-agent" headers #"")))
          (user-agent (if (== "" user-agent)
                        user-agent
                        (++ delim user-agent))))
@@ -38,44 +40,44 @@
                           referrer
                           user-agent)))))
 
-(defun request-debug (req user-agent referrer status)
-(request req user-agent referrer status 'debug))
+(defun request-debug (req status)
+  (request req status 'debug))
 
-(defun request-info (req user-agent referrer status)
-(request req user-agent referrer status 'info))
+(defun request-info (req status)
+  (request req status 'info))
 
-(defun request-notice (req user-agent referrer status)
-(request req user-agent referrer status 'notice))
+(defun request-notice (req status)
+  (request req status 'notice))
 
-(defun request-warn (req user-agent referrer status)
-(request req user-agent referrer status 'warn))
+(defun request-warn (req status)
+  (request req status 'warn))
 
-(defun request-error (req user-agent referrer status)
-(request req user-agent referrer status 'error))
+(defun request-error (req status)
+  (request req status 'error))
 
-(defun request-critical (req user-agent referrer status)
-(request req user-agent referrer status 'critical))
+(defun request-critical (req status)
+  (request req status 'critical))
 
-(defun request-alert (req user-agent referrer status)
-(request req user-agent referrer status 'alert))
+(defun request-alert (req status)
+  (request req status 'alert))
 
-(defun request-emergency (req user-agent referrer status)
-(request req user-agent referrer status 'emergency))
+(defun request-emergency (req status)
+  (request req status 'emergency))
 
 (defun request
-  ((req user-agent referrer status 'debug)
-   (log-debug (format req user-agent referrer status)))
-  ((req user-agent referrer status 'info)
-   (log-info (format req user-agent referrer status)))
-  ((req user-agent referrer status 'notice)
-   (log-notice (format req user-agent referrer status)))
-  ((req user-agent referrer status 'warn)
-   (log-warn (format req user-agent referrer status)))
-  ((req user-agent referrer status 'error)
-   (log-error (format req user-agent referrer status)))
-  ((req user-agent referrer status 'critical)
-   (log-critical (format req user-agent referrer status)))
-  ((req user-agent referrer status 'alert)
-   (log-alert (format req user-agent referrer status)))
-  ((req user-agent referrer status 'emergency)
-   (log-emergency (format req user-agent referrer status))))
+  ((req status 'debug)
+   (log-debug (format req status)))
+  ((req status 'info)
+   (log-info (format req status)))
+  ((req status 'notice)
+   (log-notice (format req status)))
+  ((req status 'warn)
+   (log-warn (format req status)))
+  ((req status 'error)
+   (log-error (format req status)))
+  ((req status 'critical)
+   (log-critical (format req status)))
+  ((req status 'alert)
+   (log-alert (format req status)))
+  ((req status 'emergency)
+   (log-emergency (format req status))))

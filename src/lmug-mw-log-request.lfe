@@ -12,9 +12,7 @@
   "Middleware that logs an HTTP request at the given log level."
   ((handler `#m(log-level ,log-level))
    (lambda (req)
-     (let* ((user-agent (maps:get #"user-agent" req #""))
-           (referrer (maps:get #"referrer" req (maps:get #"referer" req #"")))
-           (resp (funcall handler req))
+     (let* ((resp (funcall handler req))
            (status (mref resp 'status)))
-       (lmug-log:request req user-agent referrer status log-level)
+       (lmug-log:request req status log-level)
        resp))))
