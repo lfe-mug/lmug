@@ -34,7 +34,7 @@
                           user
                           now
                           method
-                          url
+                          url (yuri:format (yuri:clean url-parsed))
                           status
                           (size body)
                           referrer
