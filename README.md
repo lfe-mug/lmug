@@ -57,7 +57,7 @@ Just add it to your ``rebar.config`` deps:
 ```erlang
 {deps, [
     ...
-    {lmug, "0.1.0}
+    {lmug, "0.2.8}
   ]}.
 ```
 
@@ -77,7 +77,7 @@ rebar3 compile
 The usage examples below are done from the REPL:
 
 ```bash
-make repl
+rebar3 lfe repl
 ```
 
 ### Simple Example [&#x219F;](#contents)
@@ -90,22 +90,34 @@ no-op/identify middleware is used as filler, to help demonstrate more middleware
 If you are familiar with Clojure's Ring library, then this will look *very*
 familiar (though with a Lisp-2 flavour ...):
 
-If you'd like to test the logging middlware:
+```lisp
+lfe> (set app (clj:-> (lmug:app)
+                      (lmug-mw-request-id:wrap)
+                      (lmug-mw-content-type:wrap)
+                      (lmug-mw-status-body:wrap)))
+```
+
+Then, to run it, simply do the following:
+
+```lisp
+lfe> (funcall app (http.request:new "http://localhost/tune.mp3"))
+```
+
+If you'd like to test middleware that requires more info in the request, you'll need to set that up. Let's take the request logger as an example. First, start up the logger:
 
 ``` lisp
 lfe> (logjam:set-dev-config)
 lfe> (application:ensure_all_started 'logjam)
 ```
 
+Set up the app with the logger middleware:
+
 ```lisp
-lfe> (set app (clj:-> (lmug:app)
-                      (lmug-mw-request-id:wrap)
-                      (lmug-mw-content-type:wrap)
-                      (lmug-mw-status-body:wrap)
+lfe> (set app (clj:-> (app)
                       (lmug-mw-log-request:wrap #m(log-level notice))))
 ```
 
-Then, to run it, simply do the following:
+Now let's add details to the request that the logger will pull out:
 
 ```lisp
 lfe> (set req
@@ -135,8 +147,15 @@ The simplest lmug adaptor is for the Erlang OTP http server. Here's an
 example of an lmug application running on OTP inets/httpd:
 
 ```lisp
-TBD
+lfe> (set app (-> (lmug:response)
+                  (lmug-mw-request-id:wrap)
+                  (lmug-mw-content-type:wrap)))
+lfe> (set opts '(#(server_name "lmuginets")
+                 #(port 5099)))
+lfe> (lmug-inets:start app opts)
 ```
+
+Note that `lmug-inets` is from a [separate project](https://github.com/lfe-mug/lmug-inets).
 
 ### More Details [&#x219F;](#contents)
 
