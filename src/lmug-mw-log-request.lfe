@@ -16,4 +16,5 @@
            (referrer (maps:get #"referrer" req (maps:get #"referer" req #"")))
            (resp (funcall handler req))
            (status (mref resp 'status)))
-       (lmug-log:request req user-agent referrer status log-level)))))
+       (lmug-log:request req user-agent referrer status log-level)
+       resp))))
