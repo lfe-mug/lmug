@@ -13,6 +13,7 @@
 
   For the possible options available, see
   * `lmug-filesystem:default-response-opts/0`."
+  (lmug-state:start)
   (lambda (req)
     ;; TODO: implement
     (funcall handler req)))
