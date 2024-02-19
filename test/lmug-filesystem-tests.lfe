@@ -93,3 +93,30 @@
 (deftest read-no-file
   (is-equal #m(error "Could not read file; neither diretory, file, nor symlink.")
             (maps:without '(mtime) (lmug-filesystem:read "priv/testdata/no.file"))))
+
+(deftest walk
+  (let ((store (lmug-filesystem:walk "priv/testdata")))
+    (is-equal '(#"priv/testdata/htm/index.htm"
+                #"priv/testdata/index.html"
+                #"priv/testdata/many/index.html"
+                #"priv/testdata/many/index.json"
+                #"priv/testdata/many/index.txt"
+                #"priv/testdata/many/notes.txt"
+                #"priv/testdata/nohtml/index.json"
+                #"priv/testdata/nohtml/index.txt"
+                #"priv/testdata/none/.placeholder"
+                #"priv/testdata/text/index.txt"
+                #"priv/testdata/text/notes.txt")
+              (lists:sort (maps:keys store)))
+  (is-equal '(#(access read_write)
+              #(content #"Some notes!\n")
+              #(dir? false)
+              #(file? true)
+              #(size 12)
+              #(symlink? false)
+              #(type regular))
+            (lists:sort
+             (maps:to_list
+              (maps:without
+               '(mtime)
+               (mref store #"priv/testdata/text/notes.txt")))))))

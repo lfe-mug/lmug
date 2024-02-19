@@ -35,7 +35,12 @@
 
 (defun handle_call
   ((#(get all) _caller state-data)
-    `#(reply ,state-data ,state-data))
+   `#(reply ,state-data ,state-data))
+  ((`#(get resource ,path) _caller state-data)
+   (let ((res (maps:get path
+                        (proplists:get_value 'resources state-data)
+                        #m(error not-found))))
+     `#(reply ,res ,state-data)))
   ((`#(get ,key) _caller state-data)
     `#(reply ,(proplists:get_value key state-data) ,state-data))
   (('stop _caller state-data)
@@ -71,3 +76,9 @@
 
 (defun call-handler (req)
   (funcall (get-handler) req))
+
+(defun set-resources (store)
+  (gen_server:cast (server-name) `#(set resources ,store)))
+
+(defun get-resource (filepath)
+  (gen_server:cast (server-name) `#(get resource ,filepath)))

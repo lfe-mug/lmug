@@ -22,3 +22,13 @@
    def)
   ((str _)
    str))
+
+(defun filename-ext
+  "Returns a content type based upon the file extension of a filename or filepath."
+  ((url) (when (is_binary url))
+   (filename-ext (binary_to_list url)))
+  ((url) (when (is_list url))
+   (case (string:split (filename:extension url) ".")
+     ('("" "") (lmug:default-content-type))
+     (`("" ,ext) (lmug:ext->content-type ext))
+     (_ (lmug:default-content-type)))))
