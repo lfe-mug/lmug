@@ -5,7 +5,7 @@
    (find-index-html 2)
    (read 1)
    (response 1) (response 2)
-   ))
+   (walk 1)))
 
 (include-lib "kernel/include/file.hrl")
 
@@ -80,3 +80,14 @@
 (defun datetime->iso8601
   ((`#(#(,Y ,M ,D) #(,h ,m ,s)))
    (lists:flatten (io_lib:format "~p-~p-~pT~p:~p:~p" (list Y M D h m s)))))
+
+(defun walk (doc-root)
+  (filelib:fold_files
+   doc-root
+   ".*"
+   'true
+   (lambda (file acc)
+     ;; TODO: track metadata like current file count, total bytes read, etc.
+     ;; TODO: introduce default checks for max files, max file size, max total bytes
+     (mset acc (list_to_binary file) (read file)))
+   #m()))
