@@ -30,9 +30,12 @@
 (defun find-file (doc-root path pattern)
   (case (filelib:safe_relative_path path doc-root)
     ('unsafe `#(error ,(io_lib:format "unsafe path: ~s" `(,path))))
-    (safesubdir (let ((safepath (filename:join doc-root safesubdir)))
-                  (case (filelib:wildcard pattern safepath)
-                    ('() `#(error ,(io_lib:format
-                                    "no files for pattern at: ~s"
-                                    `(,safepath))))
-                    (files (car files)))))))
+    (safesubdir (safe-find doc-root safesubdir pattern))))
+
+(defun safe-find (doc-root safesubdir pattern)
+  (let ((safepath (filename:join doc-root safesubdir)))
+    (case (filelib:wildcard pattern safepath)
+      ('() `#(error ,(io_lib:format
+                      "no files for pattern at: ~s"
+                      `(,safepath))))
+      (files (car files)))))
