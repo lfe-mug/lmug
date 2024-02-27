@@ -122,13 +122,10 @@
   ((acc '() _ _)
    acc)
   ((acc `(,file . ,rest) max-file-size max-total-bytes)
-   (let* ((file-data (read file))
-          (md (mref acc 'metadata))
-          (file-size (mref file-data 'size))
-          (file-count  (+ 1 (mref md 'file-count)))
-          (total-bytes (+ file-size (mref md 'total-bytes)))
-          (metadata (maps:merge md `#m(file-count ,file-count
-                                       total-bytes ,total-bytes))))
+   (let ((`(,metadata ,file-data) (process-file file
+                                                metadata
+                                                max-file-size
+                                                max-total-bytes)))
 
      (cond
       ((>= file-size max-file-size)
@@ -139,3 +136,13 @@
                      (mset (list_to_binary file) file-data)
                      (mset 'metadata metadata)
                      (iterate-files rest max-file-size max-total-bytes)))))))
+
+(defun process-file (file metadata max-file-size max-total-bytes)
+  (let* ((file-data (read file))
+         (file-size (mref file-data 'size))
+         (file-count  (+ 1 (mref metadata 'file-count)))
+         (total-bytes (+ file-size (mref metadata 'total-bytes)))
+         (metadata (maps:merge metadata
+                               `#m(file-count ,file-count
+                                   total-bytes ,total-bytes))))
+    (list metadata file-data)))
