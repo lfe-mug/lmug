@@ -99,7 +99,7 @@
          (log-error "Could not walk directory: ~s" `(,msg))
          `#m(error ,msg))
        (progn
-         ;;(log-debug "File list: ~p" `(,file-list))
+         (log-debug "File list: ~p" `(,file-list))
          (case (iterate-files `#m(metadata ,metadata)
                               file-list
                               max-file-size
