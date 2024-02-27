@@ -14,6 +14,9 @@
 (defun add-content-type-from-ext (resp request-url)
   (add-content-type resp (lmug-util:filename-ext request-url)))
 
+(defun add-last-modified (resp value)
+  (add-header resp #"Last-Modified" value))
+
 (defun set-body (resp bytes)
   (set-body resp bytes (size bytes)))
 
@@ -21,3 +24,8 @@
   (clj:-> resp
           (http.response:set-body bytes)
           (add-content-length size)))
+
+(defun set-body (resp bytes size mtime)
+  (clj:-> resp
+          (set-body bytes size)
+          (add-last-modified mtime)))
