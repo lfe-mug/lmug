@@ -17,8 +17,8 @@
          (pre-load? (mref opts 'pre-load?))
          (doc-root (mref opts 'doc-root)))
     (lmug-state:set-docroot doc-root)
-    (if pre-load?
-      (lmug-state:set-resources (lmug-filesystem:walk opts)))
+    (lmug-state:set-resource-opts opts)
+    (lmug-state:walk-resources)
     (lambda (req)
       (let* ((filepath "")
              (resp (funcall handler req))

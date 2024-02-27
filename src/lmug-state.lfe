@@ -8,7 +8,7 @@
 
 (defun server-name () (MODULE))
 (defun callback-module () (MODULE))
-(defun initial-state () '())
+(defun initial-state () #m())
 (defun genserver-opts () '())
 (defun register-name () `#(local ,(server-name)))
 (defun unknown-command () #(error "Unknown command."))
@@ -31,18 +31,19 @@
 
 (defun handle_cast
   ((`#(set ,key ,value) state-data)
-    `#(noreply ,(cons `#(,key ,value) state-data))))
+    `#(noreply ,(maps:put key value state-data))))
 
 (defun handle_call
   ((#(get all) _caller state-data)
    `#(reply ,state-data ,state-data))
   ((`#(get resource ,path) _caller state-data)
-   (let ((res (maps:get path
-                        (proplists:get_value 'resources state-data)
-                        #m(error not-found))))
+   (let* ((ress (maps:get 'resources state-data #m()))
+          (res (maps:get path
+                         ress
+                         #m(error not-found))))
      `#(reply ,res ,state-data)))
   ((`#(get ,key) _caller state-data)
-    `#(reply ,(proplists:get_value key state-data) ,state-data))
+    `#(reply ,(maps:get key state-data "") ,state-data))
   (('stop _caller state-data)
     `#(stop shutdown ok state-data))
   ((message _caller state-data)
@@ -83,6 +84,9 @@
 (defun get-resource (filepath)
   (gen_server:call (server-name) `#(get resource ,filepath)))
 
+(defun get-resource-opts ()
+  (gen_server:call (server-name) '#(get resource-opts)))
+
 (defun set-docroot (doc-root)
   (gen_server:cast (server-name) `#(set doc-root ,doc-root)))
 
@@ -91,3 +95,10 @@
 
 (defun set-resources (store)
   (gen_server:cast (server-name) `#(set resources ,store)))
+
+(defun set-resource-opts (opts)
+  (gen_server:cast (server-name) `#(set resource-opts ,opts)))
+
+(defun walk-resources ()
+  (let ((opts (get-resource-opts)))
+    (set-resources (lmug-filesystem:walk opts))))
