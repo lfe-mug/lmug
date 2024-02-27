@@ -13,12 +13,12 @@
 
   For the possible options available, see
   * `lmug-filesystem:default-response-opts/0`."
-  (lmug-state:start)
   (let* ((opts (maps:merge (default-opts) opts))
          (pre-load? (mref opts 'pre-load?))
          (doc-root (mref opts 'doc-root)))
+    (lmug-state:set-docroot doc-root)
     (if pre-load?
-      (lmug-state:set-resources (lmug-filesystem:walk doc-root)))
+      (lmug-state:set-resources (lmug-filesystem:walk opts)))
     (lambda (req)
       (let* ((filepath "")
              (resp (funcall handler req))
@@ -27,14 +27,17 @@
                     (lmug-filesystem:read-file filepath))))
         ;; TODO: support the possibility of continuing the response if not found
         ;;       (checking the handler second)
-        ;; TODO: support the possibility of checkout the handler first
+        ;; TODO: support the possibility of checking the handler first
         (file-response resp req res)))))
 
 (defun default-opts ()
-  #m(doc-root #"."
-     allow-symlinks? false
-     prefer-handler? false
-     pre-load? true))
+  `#m(doc-root "."
+      allow-symlinks? false
+      prefer-handler? false
+      pre-load? true
+      max-files 10000
+      max-file-size ,(math:pow 2 27)
+      max-total-bytes ,(math:pow 2 31)))
 
 ;;(defun prefer-resource ()
 ;;  ;; TODO: implement
@@ -57,4 +60,6 @@
              (lmug-response:add-content-type-from-ext
               (mref req 'url))
              (lmug-response:set-body
-              (mref resource 'content) (mref resource 'size))))))
+              (mref resource 'content)
+              (mref resource 'size)
+              (mref resource 'mtime))))))

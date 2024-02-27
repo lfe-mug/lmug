@@ -65,20 +65,29 @@
 
 ;;; State API
 
-(defun set-handler (handler)
-  (gen_server:cast (server-name) `#(set handler ,handler)))
+(defun call-handler (req)
+  (funcall (get-handler) req))
 
-(defun get-data ()
+(defun dump ()
   (gen_server:call (server-name) #(get all)))
+
+(defun get-docroot ()
+  (gen_server:call (server-name) `#(get doc-root)))
 
 (defun get-handler ()
   (gen_server:call (server-name) #(get handler)))
 
-(defun call-handler (req)
-  (funcall (get-handler) req))
+(defun get-metadata ()
+  (clj:get-in (dump) '(resources metadata)))
+
+(defun get-resource (filepath)
+  (gen_server:call (server-name) `#(get resource ,filepath)))
+
+(defun set-docroot (doc-root)
+  (gen_server:cast (server-name) `#(set doc-root ,doc-root)))
+
+(defun set-handler (handler)
+  (gen_server:cast (server-name) `#(set handler ,handler)))
 
 (defun set-resources (store)
   (gen_server:cast (server-name) `#(set resources ,store)))
-
-(defun get-resource (filepath)
-  (gen_server:cast (server-name) `#(get resource ,filepath)))

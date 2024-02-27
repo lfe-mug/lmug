@@ -5,6 +5,10 @@
 
 (defun app ()
   ""
+  ;; TODO: make this configurable
+  (logjam:set-dev-config)
+  (application:ensure_all_started 'logjam)
+  (lmug-state:start)
   (lambda (_)
     (http.response:new)))
 
