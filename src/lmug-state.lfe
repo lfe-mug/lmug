@@ -3,6 +3,7 @@
   (export all))
 
 (include-lib "logjam/include/logjam.hrl")
+(include-lib "lmug/include/const.hrl")
 
 ;;; config functions
 
@@ -11,7 +12,6 @@
 (defun initial-state () #m())
 (defun genserver-opts () '())
 (defun register-name () `#(local ,(server-name)))
-(defun unknown-command () #(error "Unknown command."))
 
 ;;; gen_server implementation
 
@@ -47,7 +47,7 @@
   (('stop _caller state-data)
     `#(stop shutdown ok state-data))
   ((message _caller state-data)
-    `#(reply ,(unknown-command) ,state-data)))
+    `#(reply ,(ERR_UNK_CMD) ,state-data)))
 
 (defun handle_info
   ((`#(EXIT ,_pid normal) state-data)
@@ -72,33 +72,17 @@
 (defun dump ()
   (gen_server:call (server-name) #(get all)))
 
-(defun get-docroot ()
-  (gen_server:call (server-name) `#(get doc-root)))
+(defun get (key)
+  (gen_server:call (server-name) `#(get ,key)))
 
 (defun get-handler ()
   (gen_server:call (server-name) #(get handler)))
 
-(defun get-metadata ()
-  (clj:get-in (dump) '(resources metadata)))
+(defun get-in (keys)
+  (clj:get-in (dump) keys))
 
-(defun get-resource (filepath)
-  (gen_server:call (server-name) `#(get resource ,filepath)))
-
-(defun get-resource-opts ()
-  (gen_server:call (server-name) '#(get resource-opts)))
-
-(defun set-docroot (doc-root)
-  (gen_server:cast (server-name) `#(set doc-root ,doc-root)))
+(defun set (key val)
+  (gen_server:cast (server-name) `#(set ,key ,val)))
 
 (defun set-handler (handler)
   (gen_server:cast (server-name) `#(set handler ,handler)))
-
-(defun set-resources (store)
-  (gen_server:cast (server-name) `#(set resources ,store)))
-
-(defun set-resource-opts (opts)
-  (gen_server:cast (server-name) `#(set resource-opts ,opts)))
-
-(defun walk-resources ()
-  (let ((opts (get-resource-opts)))
-    (set-resources (lmug-filesystem:walk opts))))
