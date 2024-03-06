@@ -5,12 +5,15 @@
    (wrap 1) (wrap 2))
   ;; State data API for resource middleware
   (export
+   (abs-path 1)
    (doc-root 0)
    (metadata 0)
    (resource 1)
    (resources 0)
-   (set-resource 2)
-   (set-resources 1)))
+   (rm-resource 1)
+   (set-resource 1) (set-resource 2)
+   (set-resources 1)
+   (url-path 1)))
 
 (include-lib "logjam/include/logjam.hrl")
 
@@ -22,14 +25,14 @@
   "Middleware that can load resources from on-disk instead of a handler.
 
   For the possible options available, see
-  * `lmug-filesystem:default-response-opts/0`."
+  * `lmug-fs:default-response-opts/0`."
   (let* ((opts (maps:merge (default-opts) opts))
          (pre-load? (mref opts 'pre-load?))
          (doc-root (mref opts 'doc-root))
          (watch? (mref opts 'watch?)))
     (init-state doc-root opts)
     (if pre-load?
-      (let ((rsrs (lmug-filesystem:walk doc-root opts)))
+      (let ((rsrs (lmug-fs:walk doc-root opts)))
         (set-resources rsrs)
         (if watch?
           (progn
@@ -124,10 +127,14 @@
 (defun set-all (state)
   (gen_server:cast (*gen-server*) `#(set ,(*state-key*) ,state)))
 
+(defun rm-resource (url-path)
+  (set-resources (maps:without `(,url-path) (resources))))
+
 (defun set-resource (url-path)
-  (set-resource url-path
-                (lmug-filesystem:read-file (lmug-filesystem:abs-path (doc-root)
-                                                                     url-path))))
+  (let ((rsrc (lmug-fs:read-file (lmug-fs:abs-path (doc-root) url-path))))
+    (case rsrc
+      (`#m(error ,_) 'skipping)
+      (_  (set-resource url-path rsrc)))))
 
 (defun set-resource (url-path resource)
   (set-resources (maps:put url-path resource (resources))))

@@ -85,22 +85,33 @@
    ((lists:member 'inodemetamod types) (handle-modify file-path))
    ((lists:member 'modified types) (handle-modify file-path))
    ((lists:member 'removed types) (handle-delete file-path))
-   ((lists:member 'renamed types) (handle-rename file-path))
-   ))
+   ((lists:member 'renamed types) (handle-rename file-path))))
 
 (defun handle-create (file-path)
-  (log-info "handling file creation of ~s" (list file-path))
-  'tbd)
+  (let ((url-path (lmug-mw-resource:url-path file-path)))
+    (log-info "handling file creation of ~s (~p)" (list file-path url-path))
+    (add-file url-path)))
 
 (defun handle-delete (file-path)
-  (log-info "handling file deletion of ~s" (list file-path))
-  'tbd)
+  (let ((url-path (lmug-mw-resource:url-path file-path)))
+    (log-info "handling file deletion of ~s (~p)" (list file-path url-path))
+    (remove-file url-path)))
 
 (defun handle-modify (file-path)
-  (log-info "handling file modification of ~s" (list file-path))
-  'tbd)
+  (let ((url-path (lmug-mw-resource:url-path file-path)))
+    (log-info "handling file modification of ~s (~p)" (list file-path url-path))
+    (add-file url-path)))
 
 (defun handle-rename (file-path)
-  (log-info "handling file renaming of ~s" (list file-path))
-  'tbd)
+  (let ((url-path (lmug-mw-resource:url-path file-path)))
+    (log-info "handling file renaming of ~s (~p)" (list file-path url-path))
+    (remove-file url-path)
+    (add-file url-path)))
 
+;;; Private functions
+
+(defun add-file (url-path)
+  (lmug-mw-resource:set-resource url-path))
+
+(defun remove-file (url-path)
+  (lmug-mw-resource:rm-resource url-path))

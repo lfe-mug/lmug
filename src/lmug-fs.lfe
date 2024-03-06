@@ -1,11 +1,13 @@
 (defmodule lmug-fs
   (export
+   (abs-path 2)
    (find-index 2)
    (find-index-any 2)
    (find-index-html 2)
    (read 1)
    (read-file 1)
    (response 1) (response 2)
+   (url-path 2)
    (walk 1) (walk 2)))
 
 (include-lib "kernel/include/file.hrl")
@@ -24,9 +26,10 @@
      ('true (ERR_NOREAD)))))
 
 (defun read-file (path)
-  (maps:merge
-   (read-file-info path)
-   (read-file-contents path)))
+  (let ((file-info (read-file-info path))) 
+    (case file-info
+      (`#m(error ,_) file-info)
+      (_ (maps:merge file-info (read-file-contents path))))))
 
 (defun walk
   (((= `#m(doc-root ,doc-root) opts))
@@ -95,15 +98,16 @@
 (defun read-file-info (path)
   (case (file:read_file_info path)
     (`#(ok ,file-info-record) (let* (((match-file_info size size
-                                                      type type
-                                                      access access
-                                                      mtime mtime) file-info-record))
+                                                       type type
+                                                       access access
+                                                       mtime mtime) file-info-record))
                                 `#m(path ,path
                                     size ,size
                                     type ,type
                                     symlink? ,(== type 'symlink)
                                     access ,access
-                                    mtime ,(datetime->iso8601 mtime))))
+                                    mtime ,(datetime->iso8601 mtime)
+                                    read-time ,(now->iso8601))))
     (`#(error ,reason) `#m(error ,reason))))
 
 (defun read-file-contents (path)
@@ -113,7 +117,11 @@
 
 (defun datetime->iso8601
   ((`#(#(,Y ,M ,D) #(,h ,m ,s)))
-   (lists:flatten (io_lib:format "~p-~p-~pT~p:~p:~p" (list Y M D h m s)))))
+   (lists:flatten (io_lib:format "~p-~2..0B-~2..0BT~2..0B:~2..0B:~2..0B"
+                                 (list Y M D h m s)))))
+
+(defun now->iso8601 ()
+  (datetime->iso8601 (calendar:now_to_datetime (erlang:timestamp))))
 
 (defun fold-list (doc-root)
   ""
@@ -135,7 +143,7 @@
         err)
        (`#m(metadata ,md file-data ,fd)
         (clj:->> acc
-                 (maps:put (list_to_binary url-path) fd)
+                 (maps:put url-path fd)
                  (maps:put 'metadata md)
                  (process-files rest doc-root max-file-size max-total-bytes)))
        (x
@@ -165,10 +173,20 @@
          (`(,_ ,tail) (string:split path root)))
     (++ root (filelib:safe_relative_path  tail "/"))))
 
-(defun url-path (doc-root abs-path)
-  ;;(log-debug "doc-root: ~p; abs-path: ~p" (list doc-root abs-path))
-  (let ((`(,_ ,url-path) (string:split abs-path doc-root)))
-    url-path))
+(defun url-path
+  ((doc-root abs-path) (when (is_binary abs-path))
+   (url-path doc-root (binary_to_list abs-path)))
+  ((doc-root abs-path) (when (is_binary doc-root))
+   (url-path (binary_to_list doc-root) abs-path))
+  ((doc-root abs-path)
+   ;;(log-debug "doc-root: ~p; abs-path: ~p" (list doc-root abs-path))
+   (let ((`(,_ ,url-path) (string:split abs-path doc-root)))
+     (list_to_binary url-path))))
 
-(defun abs-path (doc-root url-path)
-  (++ doc-root url-path))
+(defun abs-path
+  ((doc-root url-path) (when (is_binary url-path))
+   (abs-path doc-root (binary_to_list url-path)))
+  ((doc-root url-path) (when (is_binary doc-root))
+   (abs-path (binary_to_list doc-root) url-path))
+  ((doc-root url-path)
+   (++ doc-root url-path)))
