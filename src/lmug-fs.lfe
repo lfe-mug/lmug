@@ -32,7 +32,11 @@
       (_ (maps:merge file-info (read-file-contents path))))))
 
 (defun walk
-  (((= `#m(doc-root ,doc-root) opts))
+  ((path) (when (is_binary path))
+   (walk (binary_to_list path)))
+  ((path) (when (is_list path))
+   (walk path (maps:put 'doc-root path (lmug-mw-resource:default-opts))))
+  (((= `#m(doc-root ,doc-root) opts)) (when (is_map opts))
    (walk doc-root opts)))
 
 (defun walk

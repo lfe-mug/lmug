@@ -6,6 +6,7 @@
   ;; State data API for resource middleware
   (export
    (abs-path 1)
+   (default-opts 0)
    (doc-root 0)
    (metadata 0)
    (resource 1)
