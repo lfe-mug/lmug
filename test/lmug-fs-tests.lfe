@@ -63,9 +63,7 @@
               #(size 47)
               #(symlink? false)
               #(type regular))
-            (lists:sort
-             (maps:to_list
-              (maps:without '(mtime) (lmug-fs:read "priv/testdata/index.html")))))
+            (filter-data (lmug-fs:read "priv/testdata/index.html")))
   (is-equal '(#(access read_write)
               #(content #"Some notes!\n")
               #(dir? false)
@@ -73,9 +71,7 @@
               #(size 12)
               #(symlink? false)
               #(type regular))
-            (lists:sort
-             (maps:to_list
-              (maps:without '(mtime) (lmug-fs:read "priv/testdata/text/notes.txt"))))))
+            (filter-data (lmug-fs:read "priv/testdata/text/notes.txt"))))
 
 ;; TODO: figure out symlinks in Erlang/macos ...
 ;;(deftest read-symlink-skip
@@ -91,22 +87,23 @@
 ;;              (maps:without '(mtime) (lmug-fs:read "priv/testdata/many/notes.txt"))))))
 
 (deftest read-no-file
-  (is-equal #m(error "Could not read file; neither diretory, file, nor symlink.")
-            (maps:without '(mtime) (lmug-fs:read "priv/testdata/no.file"))))
+  (is-equal '(#(error "Could not read file; neither diretory, file, nor symlink."))
+            (filter-data (lmug-fs:read "priv/testdata/no.file"))))
 
 (deftest walk
   (let ((store (lmug-fs:walk "priv/testdata")))
-    (is-equal '(#"priv/testdata/htm/index.htm"
-                #"priv/testdata/index.html"
-                #"priv/testdata/many/index.html"
-                #"priv/testdata/many/index.json"
-                #"priv/testdata/many/index.txt"
-                #"priv/testdata/many/notes.txt"
-                #"priv/testdata/nohtml/index.json"
-                #"priv/testdata/nohtml/index.txt"
-                #"priv/testdata/none/.placeholder"
-                #"priv/testdata/text/index.txt"
-                #"priv/testdata/text/notes.txt")
+    (is-equal '(metadata
+                #"/htm/index.htm"
+                #"/index.html"
+                #"/many/index.html"
+                #"/many/index.json"
+                #"/many/index.txt"
+                #"/many/notes.txt"
+                #"/nohtml/index.json"
+                #"/nohtml/index.txt"
+                #"/none/.placeholder"
+                #"/text/index.txt"
+                #"/text/notes.txt")
               (lists:sort (maps:keys store)))
   (is-equal '(#(access read_write)
               #(content #"Some notes!\n")
@@ -115,8 +112,12 @@
               #(size 12)
               #(symlink? false)
               #(type regular))
-            (lists:sort
-             (maps:to_list
-              (maps:without
-               '(mtime)
-               (mref store #"priv/testdata/text/notes.txt")))))))
+            (filter-data
+             (mref store #"/text/notes.txt")))))
+
+;;; Utility test functions
+
+(defun filter-data (read-data)
+  (lists:sort
+   (maps:to_list
+    (maps:without '(mtime read-time path) read-data))))
