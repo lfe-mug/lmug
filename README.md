@@ -36,7 +36,7 @@ standard abstractions for:
 * Higher order funtions that take transformers (handlers) as arguments and return a new, wrapped transformer (these are middleware)
 * Functions that start a server/listener and pass a handler, potentially handler chain of middleware (adapters)
 
-For an overview, be sure to read the [core concepts document](./docs/core-concepts.md). For more details, see the [lmug specification](docs/lmug-spec.md).
+For an overview, be sure to read the [core concepts document](docs/core-concepts.md). For more details, see the [lmug specification](docs/lmug-spec.md).
 
 ### Why? [&#x219F;](#contents)
 
@@ -69,8 +69,7 @@ rebar3 compile
 
 ## Documentation [&#x219F;](#contents)
 
-* The [lmug spec](docs/SPEC.md) - based on the Clojure [Ring spec](https://github.com/ring-clojure/ring/blob/master/SPEC)
-* The [lmug API Reference](http://lfe-mug.github.io/lmug/current/api)
+* The [lmug spec](docs/lmug-spec.md) - based on the Clojure [Ring spec](https://github.com/ring-clojure/ring/blob/master/SPEC)
 
 ## Usage [&#x219F;](#contents)
 

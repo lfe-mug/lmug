@@ -37,7 +37,7 @@
   ((m) (when (is_binary m))
    (method (binary_to_list m))))
 
-(defun default-content-type () (http.mimetype:text/html))
+(defun default-content-type () (http.mimetype:text/plain))
 
 (defun ext-content-types ()
   "A map of file extensions to mime-types."
