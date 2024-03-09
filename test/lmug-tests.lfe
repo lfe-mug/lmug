@@ -17,7 +17,7 @@
     (let ((`#m(status ,s headers ,h body ,b) (do-req app "http://localhost/page.html")))
       (is-equal #"text/html" (mref h #"Content-Type")))
     (let ((`#m(status ,s headers ,h body ,b) (do-req app "http://localhost/page")))
-      (is-equal #"text/html" (mref h #"Content-Type")))))
+      (is-equal #"text/plain" (mref h #"Content-Type")))))
 
 (defun do-req (app url)
   (funcall app (http.request:new url)))
